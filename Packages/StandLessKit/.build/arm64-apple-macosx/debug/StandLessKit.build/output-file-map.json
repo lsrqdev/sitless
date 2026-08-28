@@ -1,0 +1,68 @@
+{
+  "": {
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/master.swiftdeps"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/ActivityInterval.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityInterval.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityInterval.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityInterval~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityInterval.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityInterval.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/ActivityState.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityState.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityState.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityState~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityState.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/ActivityState.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/DailyActivitySummary.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DailyActivitySummary.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DailyActivitySummary.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DailyActivitySummary~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DailyActivitySummary.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DailyActivitySummary.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/DataConfidence.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DataConfidence.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DataConfidence.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DataConfidence~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DataConfidence.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/DataConfidence.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/HealthAuthorizationState.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthAuthorizationState.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthAuthorizationState.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthAuthorizationState~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthAuthorizationState.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthAuthorizationState.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Models/HealthDiagnosticsSnapshot.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDiagnosticsSnapshot.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDiagnosticsSnapshot.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDiagnosticsSnapshot~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDiagnosticsSnapshot.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDiagnosticsSnapshot.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Services/HealthDataProviding.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDataProviding.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDataProviding.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDataProviding~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDataProviding.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthDataProviding.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/Services/HealthKitManager.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthKitManager.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthKitManager.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthKitManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthKitManager.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/HealthKitManager.dia"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Sources/StandLessKit/TestSupport/MockHealthDataProvider.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/MockHealthDataProvider.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/MockHealthDataProvider.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/MockHealthDataProvider~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/MockHealthDataProvider.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKit.build/MockHealthDataProvider.dia"
+  }
+}

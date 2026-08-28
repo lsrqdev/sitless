@@ -1,0 +1,12 @@
+{
+  "": {
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/master.swiftdeps"
+  },
+  "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/Tests/StandLessKitTests/MockHealthDataProviderTests.swift": {
+    "dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/MockHealthDataProviderTests.d",
+    "object": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/MockHealthDataProviderTests.swift.o",
+    "swiftmodule": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/MockHealthDataProviderTests~partial.swiftmodule",
+    "swift-dependencies": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/MockHealthDataProviderTests.swiftdeps",
+    "diagnostics": "/Users/luis/Desktop/sitless/.defract-worktrees/task-codex-prompt-build-standless-for-iphone-01m141etk30r/Packages/StandLessKit/.build/arm64-apple-macosx/debug/StandLessKitTests.build/MockHealthDataProviderTests.dia"
+  }
+}
