@@ -30,6 +30,11 @@ struct TodayView: View {
                 await viewModel.start()
             }
         }
+        .onAppear {
+            if !showAccessScreen {
+                viewModel.reloadGoal()
+            }
+        }
     }
 
     @ViewBuilder
@@ -46,8 +51,10 @@ struct TodayView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
             case .unavailable:
                 stateMessage("Health data isn't available on this device.")
-            case .authorizationRequired:
+            case .denied:
                 stateMessage("Allow Health access in Settings to see your standing time.")
+            case .noData:
+                noDataBody
             case .queryFailure:
                 stateMessage("Couldn't load your standing time. Try again shortly.")
             case .loaded:
@@ -67,8 +74,17 @@ struct TodayView: View {
                         .font(.caption.weight(.bold))
                         .tracking(1.5)
                         .foregroundStyle(MinimalHealthAccessView.standingAccent)
+
+                    if let comparisonText {
+                        Text(comparisonText)
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding(.top, 24)
+
+                GoalProgressView(current: viewModel.todayStandingDuration, goal: viewModel.standingGoal)
+                    .padding(.horizontal, 32)
 
                 Chart(viewModel.sevenDaySeries) { day in
                     BarMark(
@@ -83,6 +99,32 @@ struct TodayView: View {
         }
     }
 
+    private var noDataBody: some View {
+        VStack(spacing: 8) {
+            Text("No standing data yet")
+                .font(.headline)
+            Text("Wear your Apple Watch normally and check again later.")
+                .font(.body)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    private var comparisonText: String? {
+        switch viewModel.comparison {
+        case .vsYesterday(let delta):
+            let sign = delta >= 0 ? "+" : "\u{2212}"
+            return "\(sign)\(Self.formatted(abs(delta))) standing vs yesterday"
+        case .vsSevenDayAverage(let deltaPercent):
+            let sign = deltaPercent >= 0 ? "+" : ""
+            return "\(sign)\(deltaPercent)% vs your 7-day average"
+        case nil:
+            return nil
+        }
+    }
+
     private func stateMessage(_ text: String) -> some View {
         Text(text)
             .font(.body)
@@ -92,7 +134,7 @@ struct TodayView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    private static func formatted(_ duration: TimeInterval) -> String {
+    static func formatted(_ duration: TimeInterval) -> String {
         let hours = Int(duration) / 3600
         let minutes = (Int(duration) % 3600) / 60
         return "\(hours)h \(minutes)m"

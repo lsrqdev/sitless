@@ -1,2 +1,6 @@
 .defract-worktrees
 .defract/
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
