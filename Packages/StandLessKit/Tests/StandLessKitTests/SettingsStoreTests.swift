@@ -33,4 +33,14 @@ final class SettingsStoreTests: XCTestCase {
             XCTAssertEqual(store.standingGoal.duration, option)
         }
     }
+
+    func testSettingStandingGoalInvokesOnStandingGoalChanged() {
+        let (store, _) = makeStore()
+        var received: StandingGoal?
+        store.onStandingGoalChanged = { received = $0 }
+
+        store.standingGoal = StandingGoal(duration: 4.5 * 3600)
+
+        XCTAssertEqual(received?.duration, 4.5 * 3600)
+    }
 }

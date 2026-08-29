@@ -8,6 +8,12 @@ public final class SettingsStore: @unchecked Sendable {
     private let defaults: UserDefaults
     private static let standingGoalKey = "standless.settings.standingGoalDuration"
 
+    /// Invoked whenever `standingGoal` is set to a new value. The iPhone target wires this to
+    /// `WatchConnectivityService.pushStandingGoal(_:)` so a goal change reaches the paired Watch
+    /// (Phase 4). The Watch's own `SettingsStore` instance never sets this — the Watch has no
+    /// goal-setting UI, it only ever receives (R34).
+    public var onStandingGoalChanged: (@Sendable (StandingGoal) -> Void)?
+
     public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
     }
@@ -20,6 +26,7 @@ public final class SettingsStore: @unchecked Sendable {
         }
         set {
             defaults.set(newValue.duration, forKey: Self.standingGoalKey)
+            onStandingGoalChanged?(newValue)
         }
     }
 }

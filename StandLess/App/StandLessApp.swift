@@ -5,6 +5,16 @@ import StandLessKit
 struct StandLessApp: App {
     private let healthData: HealthDataProviding = HealthKitManager()
     private let settingsStore = SettingsStore()
+    private let connectivity: WatchConnectivityService
+
+    init() {
+        let connectivity = WatchConnectivityService(settingsStore: settingsStore)
+        settingsStore.onStandingGoalChanged = { [connectivity] goal in
+            connectivity.pushStandingGoal(goal)
+        }
+        connectivity.activate()
+        self.connectivity = connectivity
+    }
 
     var body: some Scene {
         WindowGroup {
