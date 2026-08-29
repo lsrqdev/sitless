@@ -18,9 +18,24 @@ public struct HealthDiagnosticsSnapshot: Equatable, Sendable {
 
     public let queryRange: DateInterval
     public let standTimeSamples: [SampleEntry]
+    public let exerciseTimeSamples: [SampleEntry]
+    public let moveTimeSamples: [SampleEntry]
+    public let sleepSamples: [SampleEntry]
+    public let steps: Int
 
-    public init(queryRange: DateInterval, standTimeSamples: [SampleEntry]) {
+    public init(
+        queryRange: DateInterval,
+        standTimeSamples: [SampleEntry],
+        exerciseTimeSamples: [SampleEntry] = [],
+        moveTimeSamples: [SampleEntry] = [],
+        sleepSamples: [SampleEntry] = [],
+        steps: Int = 0
+    ) {
         self.queryRange = queryRange
         self.standTimeSamples = standTimeSamples
+        self.exerciseTimeSamples = exerciseTimeSamples
+        self.moveTimeSamples = moveTimeSamples
+        self.sleepSamples = sleepSamples
+        self.steps = steps
     }
 }

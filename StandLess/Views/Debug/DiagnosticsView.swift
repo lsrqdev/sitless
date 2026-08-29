@@ -15,19 +15,13 @@ struct DiagnosticsView: View {
                 Section("Query Range") {
                     Text("\(snapshot.queryRange.start.formatted()) – \(snapshot.queryRange.end.formatted())")
                 }
-                Section("Stand Time Samples (\(snapshot.standTimeSamples.count))") {
-                    ForEach(Array(snapshot.standTimeSamples.enumerated()), id: \.offset) { _, sample in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(sample.sourceName)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                            Text("\(sample.start.formatted()) – \(sample.end.formatted())")
-                                .font(.caption)
-                            Text("\(sample.value, specifier: "%.1f") min")
-                                .font(.caption)
-                        }
-                    }
+                Section("Steps") {
+                    Text("\(snapshot.steps)")
                 }
+                sampleSection("Stand Time Samples", samples: snapshot.standTimeSamples, unit: "min")
+                sampleSection("Exercise Time Samples", samples: snapshot.exerciseTimeSamples, unit: "min")
+                sampleSection("Move Time Samples", samples: snapshot.moveTimeSamples, unit: "kcal")
+                sampleSection("Sleep Samples", samples: snapshot.sleepSamples, unit: "category value")
             }
             if let errorMessage {
                 Section("Error") {
@@ -44,6 +38,23 @@ struct DiagnosticsView: View {
             }
         }
         .task { await refresh() }
+    }
+
+    @ViewBuilder
+    private func sampleSection(_ title: String, samples: [HealthDiagnosticsSnapshot.SampleEntry], unit: String) -> some View {
+        Section("\(title) (\(samples.count))") {
+            ForEach(Array(samples.enumerated()), id: \.offset) { _, sample in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(sample.sourceName)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("\(sample.start.formatted()) – \(sample.end.formatted())")
+                        .font(.caption)
+                    Text("\(sample.value, specifier: "%.1f") \(unit)")
+                        .font(.caption)
+                }
+            }
+        }
     }
 
     private func refresh() async {

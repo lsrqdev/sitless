@@ -21,6 +21,10 @@
 		00000000000000000000003B /* TrendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000035 /* TrendsViewModel.swift */; };
 		00000000000000000000003C /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000036 /* TrendsView.swift */; };
 		00000000000000000000003D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* Localizable.xcstrings */; };
+		000000000000000000000044 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000040 /* OnboardingViewModel.swift */; };
+		000000000000000000000045 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000041 /* OnboardingView.swift */; };
+		000000000000000000000046 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000042 /* TimelineView.swift */; };
+		000000000000000000000047 /* MetricRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000043 /* MetricRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +54,10 @@
 		000000000000000000000035 /* TrendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsViewModel.swift; sourceTree = "<group>"; };
 		000000000000000000000036 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
 		000000000000000000000037 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		000000000000000000000040 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000041 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		000000000000000000000042 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		000000000000000000000043 /* MetricRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +126,7 @@
 				00000000000000000000000C /* TodayView.swift */,
 				000000000000000000000033 /* SettingsView.swift */,
 				000000000000000000000036 /* TrendsView.swift */,
+				000000000000000000000041 /* OnboardingView.swift */,
 				00000000000000000000003E /* Components */,
 				000000000000000000000007 /* Debug */,
 			);
@@ -138,6 +147,7 @@
 				00000000000000000000000E /* TodayViewModel.swift */,
 				000000000000000000000034 /* SettingsViewModel.swift */,
 				000000000000000000000035 /* TrendsViewModel.swift */,
+				000000000000000000000040 /* OnboardingViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -146,6 +156,8 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000032 /* GoalProgressView.swift */,
+				000000000000000000000042 /* TimelineView.swift */,
+				000000000000000000000043 /* MetricRow.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -284,6 +296,10 @@
 				00000000000000000000003A /* SettingsViewModel.swift in Sources */,
 				00000000000000000000003B /* TrendsViewModel.swift in Sources */,
 				00000000000000000000003C /* TrendsView.swift in Sources */,
+				000000000000000000000044 /* OnboardingViewModel.swift in Sources */,
+				000000000000000000000045 /* OnboardingView.swift in Sources */,
+				000000000000000000000046 /* TimelineView.swift in Sources */,
+				000000000000000000000047 /* MetricRow.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

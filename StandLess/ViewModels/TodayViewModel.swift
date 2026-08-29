@@ -11,15 +11,10 @@ final class TodayViewModel {
         case denied
         case noData
         case loaded
+        /// Confidence is too low to trust a percentage or sedentary figure (R24); standing time
+        /// is still shown, since that part is genuinely measured.
+        case partialData
         case queryFailure
-    }
-
-    /// How today's standing time compares to a baseline. Prefers "yesterday at this time"
-    /// (a partial-day-aware comparison) and falls back to the prior-days average when
-    /// yesterday has no standing data of its own.
-    enum Comparison: Equatable {
-        case vsYesterday(delta: TimeInterval)
-        case vsSevenDayAverage(deltaPercent: Int)
     }
 
     struct DailyStanding: Equatable, Identifiable {
@@ -31,16 +26,30 @@ final class TodayViewModel {
     private(set) var state: LoadState = .loading
     private(set) var todayStandingDuration: TimeInterval = 0
     private(set) var sevenDaySeries: [DailyStanding] = []
-    private(set) var comparison: Comparison?
+    private(set) var comparison: StandingComparison?
     private(set) var standingGoal: TimeInterval
+    private(set) var estimatedSedentaryDuration: TimeInterval?
+    private(set) var activeDuration: TimeInterval?
+    private(set) var standingPercentage: Int?
+    private(set) var timeline: [ActivityInterval] = []
+    private(set) var confidence: DataConfidence = .low
+    private(set) var longestInactiveDuration: TimeInterval?
+    private(set) var todayWindow: DateInterval = DateInterval(start: .distantPast, end: .distantPast)
 
     let healthData: HealthDataProviding
     private let settingsStore: SettingsStore
+    private let activityCalculator: ActivityCalculating
     private let calendar: Calendar
 
-    init(healthData: HealthDataProviding, settingsStore: SettingsStore = SettingsStore(), calendar: Calendar = .current) {
+    init(
+        healthData: HealthDataProviding,
+        settingsStore: SettingsStore = SettingsStore(),
+        activityCalculator: ActivityCalculating = ActivityCalculator(),
+        calendar: Calendar = .current
+    ) {
         self.healthData = healthData
         self.settingsStore = settingsStore
+        self.activityCalculator = activityCalculator
         self.calendar = calendar
         self.standingGoal = settingsStore.standingGoal.duration
     }
@@ -94,67 +103,70 @@ final class TodayViewModel {
             guard !intervals.isEmpty else {
                 todayStandingDuration = 0
                 comparison = nil
+                resetTodaySummary()
                 state = .noData
                 return
             }
 
             todayStandingDuration = Self.totalDuration(of: intervals, in: DateInterval(start: startOfToday, end: now))
-            comparison = Self.comparison(
+            comparison = ActivityCalculator.sameTimeOfDayComparison(
                 todayStandingDuration: todayStandingDuration,
                 intervals: intervals,
-                sevenDaySeries: sevenDaySeries,
+                // sevenDaySeries spans sevenDaysAgo...today; drop today itself to average the prior days.
+                priorDaySeries: sevenDaySeries.dropLast().map { ActivityCalculator.DailyStanding(date: $0.date, duration: $0.duration) },
                 startOfYesterday: startOfYesterday,
                 yesterdaySameTime: yesterdaySameTime,
                 calendar: calendar
             )
-            state = .loaded
+
+            let window = DateInterval(start: startOfToday, end: now)
+            todayWindow = window
+            let todayStanding = intervals.filter { calendar.isDate($0.start, inSameDayAs: startOfToday) }
+            async let activity = healthData.activityIntervals(in: window)
+            async let sleep = healthData.sleepIntervals(in: window)
+            async let steps = healthData.steps(in: window)
+            async let standHours = healthData.standHours(in: window)
+
+            let summary = activityCalculator.summarize(
+                standing: todayStanding,
+                activity: try await activity,
+                sleep: try await sleep,
+                steps: try await steps,
+                standHours: try await standHours,
+                observationWindow: window,
+                calendar: calendar
+            )
+            estimatedSedentaryDuration = summary.estimatedSedentaryDuration
+            activeDuration = summary.activeDuration
+            standingPercentage = summary.standingPercentage
+            timeline = summary.timeline
+            confidence = summary.confidence
+            longestInactiveDuration = summary.longestInactiveDuration
+
+            state = confidence == .low ? .partialData : .loaded
         } catch {
             state = .queryFailure
         }
     }
 
-    static func comparison(
-        todayStandingDuration: TimeInterval,
-        intervals: [ActivityInterval],
-        sevenDaySeries: [DailyStanding],
-        startOfYesterday: Date,
-        yesterdaySameTime: Date,
-        calendar: Calendar
-    ) -> Comparison? {
-        let yesterdayHasData = intervals.contains { calendar.isDate($0.start, inSameDayAs: startOfYesterday) }
-        if yesterdayHasData {
-            let yesterdaySameTimeDuration = totalDuration(
-                of: intervals,
-                in: DateInterval(start: startOfYesterday, end: yesterdaySameTime)
-            )
-            return .vsYesterday(delta: todayStandingDuration - yesterdaySameTimeDuration)
-        }
-
-        // sevenDaySeries spans sevenDaysAgo...today; drop today itself to average the prior days.
-        let priorDays = sevenDaySeries.dropLast()
-        guard !priorDays.isEmpty else { return nil }
-        let priorAverage = priorDays.reduce(0) { $0 + $1.duration } / Double(priorDays.count)
-        guard priorAverage > 0 else { return nil }
-        let deltaPercent = Int(((todayStandingDuration - priorAverage) / priorAverage * 100).rounded())
-        return .vsSevenDayAverage(deltaPercent: deltaPercent)
+    private func resetTodaySummary() {
+        estimatedSedentaryDuration = nil
+        activeDuration = nil
+        standingPercentage = nil
+        timeline = []
+        confidence = .low
+        longestInactiveDuration = nil
     }
 
     /// Sums interval duration for intervals starting on `day`'s calendar day.
     static func totalDuration(of intervals: [ActivityInterval], on day: Date, calendar: Calendar) -> TimeInterval {
-        intervals
-            .filter { calendar.isDate($0.start, inSameDayAs: day) }
-            .reduce(0) { $0 + $1.duration }
+        ActivityCalculator.totalDuration(of: intervals, on: day, calendar: calendar)
     }
 
     /// Sums interval duration clipped to an arbitrary date range — used for partial-day
     /// comparisons like "today so far" or "yesterday at this same time".
     static func totalDuration(of intervals: [ActivityInterval], in range: DateInterval) -> TimeInterval {
-        intervals.reduce(0) { total, interval in
-            let start = max(interval.start, range.start)
-            let end = min(interval.end, range.end)
-            guard end > start else { return total }
-            return total + end.timeIntervalSince(start)
-        }
+        ActivityCalculator.totalDuration(of: intervals, in: range)
     }
 
     static func dailyTotals(
@@ -163,14 +175,7 @@ final class TodayViewModel {
         to end: Date,
         calendar: Calendar
     ) -> [DailyStanding] {
-        var day = start
-        var results: [DailyStanding] = []
-        while day <= end {
-            let total = totalDuration(of: intervals, on: day, calendar: calendar)
-            results.append(DailyStanding(date: day, duration: total))
-            guard let next = calendar.date(byAdding: .day, value: 1, to: day) else { break }
-            day = next
-        }
-        return results
+        ActivityCalculator.dailyTotals(of: intervals, from: start, to: end, calendar: calendar)
+            .map { DailyStanding(date: $0.date, duration: $0.duration) }
     }
 }

@@ -67,9 +67,41 @@ struct TrendsView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal)
+
+                if let trend = viewModel.sedentaryTrend {
+                    Divider().padding(.horizontal)
+                    sedentaryTrendSection(trend)
+                        .padding(.horizontal)
+                }
             }
             .padding(.top, 8)
         }
+    }
+
+    private func sedentaryTrendSection(_ trend: TrendsViewModel.SedentaryTrend) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("ESTIMATED SEDENTARY TIME")
+                .font(.system(size: 11, weight: .bold))
+                .tracking(0.8)
+                .foregroundStyle(.secondary)
+            HStack {
+                Text(trend.periodAverage <= trend.priorPeriodAverage ? "Trending down" : "Trending up")
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                Text(sedentaryDeltaText(trend))
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(ActivityColor.sedentary)
+            }
+            Text("Shown only on days with enough data to estimate reliably.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func sedentaryDeltaText(_ trend: TrendsViewModel.SedentaryTrend) -> String {
+        let delta = trend.periodAverage - trend.priorPeriodAverage
+        let sign = delta >= 0 ? "+" : "\u{2212}"
+        return "\(sign)\(TodayView.formatted(abs(delta)))/day"
     }
 
     private var comparisonText: String {

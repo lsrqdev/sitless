@@ -13,6 +13,10 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
     // Apple system-defined identifiers — always resolvable on supported OS versions.
     private static let standTimeType = HKObjectType.quantityType(forIdentifier: .appleStandTime)!
     private static let standHourType = HKObjectType.categoryType(forIdentifier: .appleStandHour)!
+    private static let exerciseTimeType = HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!
+    private static let moveTimeType = HKObjectType.quantityType(forIdentifier: .appleMoveTime)!
+    private static let stepCountType = HKObjectType.quantityType(forIdentifier: .stepCount)!
+    private static let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
 
     public init() {}
 
@@ -34,7 +38,10 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
         guard HKHealthStore.isHealthDataAvailable() else {
             throw HealthKitManagerError.unavailable
         }
-        let readTypes: Set<HKObjectType> = [Self.standTimeType, Self.standHourType]
+        let readTypes: Set<HKObjectType> = [
+            Self.standTimeType, Self.standHourType,
+            Self.exerciseTimeType, Self.moveTimeType, Self.stepCountType, Self.sleepType
+        ]
         try await healthStore.requestAuthorization(toShare: [], read: readTypes)
     }
 
@@ -48,17 +55,78 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
         return samples.filter { $0.value == HKCategoryValueAppleStandHour.stood.rawValue }.count
     }
 
+    public func activityIntervals(in range: DateInterval) async throws -> [ActivityInterval] {
+        async let exercise = quantitySamples(for: Self.exerciseTimeType, in: range)
+        async let move = quantitySamples(for: Self.moveTimeType, in: range)
+        let exerciseIntervals = try await exercise.map { ActivityInterval(start: $0.startDate, end: $0.endDate, state: .active) }
+        let moveIntervals = try await move.map { ActivityInterval(start: $0.startDate, end: $0.endDate, state: .active) }
+        return exerciseIntervals + moveIntervals
+    }
+
+    public func sleepIntervals(in range: DateInterval) async throws -> [ActivityInterval] {
+        let samples = try await categorySamples(for: Self.sleepType, in: range)
+        return samples.compactMap { sample in
+            guard Self.isAsleepValue(sample.value) else { return nil }
+            return ActivityInterval(start: sample.startDate, end: sample.endDate, state: .sleep)
+        }
+    }
+
+    public func steps(in range: DateInterval) async throws -> Int {
+        let samples = try await quantitySamples(for: Self.stepCountType, in: range)
+        let total = samples.reduce(0.0) { $0 + $1.quantity.doubleValue(for: .count()) }
+        return Int(total.rounded())
+    }
+
     public func rawDiagnostics(in range: DateInterval) async throws -> HealthDiagnosticsSnapshot {
-        let samples = try await quantitySamples(for: Self.standTimeType, in: range)
-        let entries = samples.map { sample in
+        async let standSamples = quantitySamples(for: Self.standTimeType, in: range)
+        async let exerciseSamples = quantitySamples(for: Self.exerciseTimeType, in: range)
+        async let moveSamples = quantitySamples(for: Self.moveTimeType, in: range)
+        async let sleepSamples = categorySamples(for: Self.sleepType, in: range)
+        async let stepSamples = quantitySamples(for: Self.stepCountType, in: range)
+
+        let standEntries = try await standSamples.map { Self.entry($0, unit: .minute()) }
+        let exerciseEntries = try await exerciseSamples.map { Self.entry($0, unit: .minute()) }
+        let moveEntries = try await moveSamples.map { Self.entry($0, unit: .kilocalorie()) }
+        let sleepEntries = try await sleepSamples.map { sample in
             HealthDiagnosticsSnapshot.SampleEntry(
                 start: sample.startDate,
                 end: sample.endDate,
-                value: sample.quantity.doubleValue(for: .minute()),
+                value: Double(sample.value),
                 sourceName: sample.sourceRevision.source.name
             )
         }
-        return HealthDiagnosticsSnapshot(queryRange: range, standTimeSamples: entries)
+        let totalSteps = try await stepSamples.reduce(0.0) { $0 + $1.quantity.doubleValue(for: .count()) }
+
+        return HealthDiagnosticsSnapshot(
+            queryRange: range,
+            standTimeSamples: standEntries,
+            exerciseTimeSamples: exerciseEntries,
+            moveTimeSamples: moveEntries,
+            sleepSamples: sleepEntries,
+            steps: Int(totalSteps.rounded())
+        )
+    }
+
+    private static func entry(_ sample: HKQuantitySample, unit: HKUnit) -> HealthDiagnosticsSnapshot.SampleEntry {
+        HealthDiagnosticsSnapshot.SampleEntry(
+            start: sample.startDate,
+            end: sample.endDate,
+            value: sample.quantity.doubleValue(for: unit),
+            sourceName: sample.sourceRevision.source.name
+        )
+    }
+
+    /// `stationary`/motion states are never consulted here — sleep is classified purely from
+    /// HealthKit's own sleep-analysis categories (R13), never inferred from Core Motion.
+    private static func isAsleepValue(_ value: Int) -> Bool {
+        switch HKCategoryValueSleepAnalysis(rawValue: value) {
+        case .asleepUnspecified, .asleepCore, .asleepDeep, .asleepREM:
+            return true
+        case .inBed, .awake, .none:
+            return false
+        @unknown default:
+            return false
+        }
     }
 
     private func quantitySamples(for type: HKQuantityType, in range: DateInterval) async throws -> [HKQuantitySample] {

@@ -6,6 +6,7 @@ import StandLessKit
 @Observable
 final class SettingsViewModel {
     private let store: SettingsStore
+    private let healthData: HealthDataProviding
 
     var standingGoal: StandingGoal {
         didSet {
@@ -14,8 +15,13 @@ final class SettingsViewModel {
         }
     }
 
-    init(store: SettingsStore) {
+    var isHealthConnected: Bool {
+        healthData.authorizationState == .authorized
+    }
+
+    init(store: SettingsStore, healthData: HealthDataProviding) {
         self.store = store
+        self.healthData = healthData
         self.standingGoal = store.standingGoal
     }
 }

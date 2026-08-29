@@ -41,40 +41,85 @@ final class TodayViewModelTests: XCTestCase {
     func testRefreshLoadsTodayStandingFromMock() async {
         let calendar = Calendar.current
         let now = Date()
-        let interval = ActivityInterval(
-            start: now.addingTimeInterval(-3600),
-            end: now.addingTimeInterval(-1800),
-            state: .standing
-        )
+        let startOfToday = calendar.startOfDay(for: now)
+        // Clamped to startOfToday so this stays correct even when the test runs within the
+        // first hour after midnight — a fixed "-3600s/-1800s" offset could otherwise land
+        // partly or entirely on yesterday.
+        let intervalStart = max(startOfToday, now.addingTimeInterval(-3600))
+        let intervalEnd = max(startOfToday, now.addingTimeInterval(-1800))
+        let interval = ActivityInterval(start: intervalStart, end: intervalEnd, state: .standing)
+        let expectedDuration = intervalEnd.timeIntervalSince(intervalStart)
         let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([interval]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
 
         await viewModel.refresh()
 
+        // A single short standing sample against the whole elapsed day is sparse coverage,
+        // so this genuinely is a low-confidence / partial-data day (R16) — but the measured
+        // standing duration itself is still shown correctly (R24).
+        XCTAssertEqual(viewModel.state, .partialData)
+        XCTAssertEqual(viewModel.todayStandingDuration, expectedDuration, accuracy: 0.001)
+    }
+
+    func testRefreshWithComprehensiveCoverageResultsInLoadedStateWithPercentage() async {
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfToday = calendar.startOfDay(for: now)
+        let standingInterval = ActivityInterval(start: now.addingTimeInterval(-600), end: now.addingTimeInterval(-300), state: .standing)
+        // Spans the whole tracked window so there is no edge-of-coverage unknown time.
+        let activeInterval = ActivityInterval(start: startOfToday, end: now, state: .active)
+        let sleepInterval = ActivityInterval(start: startOfToday, end: startOfToday.addingTimeInterval(60), state: .sleep)
+        let mock = MockHealthDataProvider(
+            authorizationState: .authorized,
+            standingIntervalsResult: .success([standingInterval]),
+            activityIntervalsResult: .success([activeInterval]),
+            sleepIntervalsResult: .success([sleepInterval])
+        )
+        let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
+
+        await viewModel.refresh()
+
         XCTAssertEqual(viewModel.state, .loaded)
-        XCTAssertEqual(viewModel.todayStandingDuration, 1800, accuracy: 0.001)
+        XCTAssertNotNil(viewModel.standingPercentage)
+        XCTAssertFalse(viewModel.timeline.isEmpty)
+    }
+
+    func testRefreshWithSparseCoverageOmitsStandingPercentage() async {
+        let calendar = Calendar.current
+        let now = Date()
+        let interval = ActivityInterval(start: now.addingTimeInterval(-300), end: now, state: .standing)
+        let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([interval]))
+        let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
+
+        await viewModel.refresh()
+
+        XCTAssertEqual(viewModel.state, .partialData)
+        XCTAssertEqual(viewModel.confidence, .low)
+        XCTAssertNil(viewModel.standingPercentage)
     }
 
     func testRefreshComparesAgainstYesterdayAtTheSameTimeOfDay() async {
         let calendar = Calendar.current
         let now = Date()
+        let startOfToday = calendar.startOfDay(for: now)
         guard let yesterdaySameTime = calendar.date(byAdding: .day, value: -1, to: now) else {
             XCTFail("failed to construct dates")
             return
         }
+        let startOfYesterday = calendar.startOfDay(for: yesterdaySameTime)
 
-        // Yesterday: 20 minutes of standing, ending well before "yesterday at this same time".
-        let yesterdayInterval = ActivityInterval(
-            start: yesterdaySameTime.addingTimeInterval(-1800),
-            end: yesterdaySameTime.addingTimeInterval(-600),
-            state: .standing
-        )
-        // Today: 40 minutes of standing, ending well before "now".
-        let todayInterval = ActivityInterval(
-            start: now.addingTimeInterval(-2700),
-            end: now.addingTimeInterval(-300),
-            state: .standing
-        )
+        // Both intervals are clamped to their intended calendar day so a fixed offset can't
+        // spill across midnight when the test happens to run in the first minutes of a day.
+        let yesterdayStart = max(startOfYesterday, yesterdaySameTime.addingTimeInterval(-1800))
+        let yesterdayEnd = max(startOfYesterday, yesterdaySameTime.addingTimeInterval(-600))
+        let yesterdayInterval = ActivityInterval(start: yesterdayStart, end: yesterdayEnd, state: .standing)
+        let yesterdaySameTimeDuration = yesterdayEnd.timeIntervalSince(yesterdayStart)
+
+        let todayStart = max(startOfToday, now.addingTimeInterval(-2700))
+        let todayEnd = max(startOfToday, now.addingTimeInterval(-300))
+        let todayInterval = ActivityInterval(start: todayStart, end: todayEnd, state: .standing)
+        let expectedTodayDuration = todayEnd.timeIntervalSince(todayStart)
+
         let mock = MockHealthDataProvider(
             authorizationState: .authorized,
             standingIntervalsResult: .success([yesterdayInterval, todayInterval])
@@ -83,13 +128,16 @@ final class TodayViewModelTests: XCTestCase {
 
         await viewModel.refresh()
 
-        XCTAssertEqual(viewModel.state, .loaded)
-        XCTAssertEqual(viewModel.todayStandingDuration, 2400, accuracy: 1)
+        // This test is about comparison arithmetic, not confidence — the confidence bucket
+        // is sensitive to how close to midnight the suite happens to run (it changes the size
+        // of "today's" tracked window), so accept either post-load state (R16).
+        XCTAssertTrue(viewModel.state == .loaded || viewModel.state == .partialData)
+        XCTAssertEqual(viewModel.todayStandingDuration, expectedTodayDuration, accuracy: 1)
         guard case .vsYesterday(let delta) = viewModel.comparison else {
             XCTFail("Expected vsYesterday comparison, got \(String(describing: viewModel.comparison))")
             return
         }
-        XCTAssertEqual(delta, 1200, accuracy: 1)
+        XCTAssertEqual(delta, expectedTodayDuration - yesterdaySameTimeDuration, accuracy: 1)
     }
 
     func testRefreshFallsBackToSevenDayAverageWhenYesterdayHasNoData() async {
@@ -106,11 +154,10 @@ final class TodayViewModelTests: XCTestCase {
             end: twoDaysAgo.addingTimeInterval(7200),
             state: .standing
         )
-        let todayInterval = ActivityInterval(
-            start: now.addingTimeInterval(-1800),
-            end: now.addingTimeInterval(-300),
-            state: .standing
-        )
+        // Clamped to startOfToday so a fixed offset can't spill into yesterday.
+        let todayStart = max(startOfToday, now.addingTimeInterval(-1800))
+        let todayEnd = max(startOfToday, now.addingTimeInterval(-300))
+        let todayInterval = ActivityInterval(start: todayStart, end: todayEnd, state: .standing)
         let mock = MockHealthDataProvider(
             authorizationState: .authorized,
             standingIntervalsResult: .success([twoDaysAgoInterval, todayInterval])
@@ -119,7 +166,8 @@ final class TodayViewModelTests: XCTestCase {
 
         await viewModel.refresh()
 
-        XCTAssertEqual(viewModel.state, .loaded)
+        // Confidence is incidental here too — this test is about the fallback-to-average path.
+        XCTAssertTrue(viewModel.state == .loaded || viewModel.state == .partialData)
         guard case .vsSevenDayAverage(let deltaPercent) = viewModel.comparison else {
             XCTFail("Expected vsSevenDayAverage comparison, got \(String(describing: viewModel.comparison))")
             return
