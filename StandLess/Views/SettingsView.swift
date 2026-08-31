@@ -20,11 +20,11 @@ struct SettingsView: View {
                         LabeledContent("Standing goal", value: TodayView.formatted(viewModel.standingGoal.duration))
                     }
 
-                    // Placeholder row: the inactivity reminder is wired up in Phase 5, once
-                    // Core Motion and NotificationManager exist. Shown here to match the
-                    // approved Settings layout, but not yet interactive.
-                    LabeledContent("Inactivity reminder", value: "Off")
-                        .foregroundStyle(.secondary)
+                    NavigationLink {
+                        ReminderIntervalPicker(selected: $viewModel.reminderInterval)
+                    } label: {
+                        LabeledContent("Inactivity reminder", value: viewModel.reminderInterval.displayName)
+                    }
                 }
 
                 Section {
@@ -33,8 +33,13 @@ struct SettingsView: View {
                             .foregroundStyle(viewModel.isHealthConnected ? MinimalHealthAccessView.standingAccent : .secondary)
                             .fontWeight(viewModel.isHealthConnected ? .semibold : .regular)
                     }
+                    LabeledContent("Motion access") {
+                        Text(viewModel.isMotionConnected ? "Connected" : "Not Connected")
+                            .foregroundStyle(viewModel.isMotionConnected ? MinimalHealthAccessView.standingAccent : .secondary)
+                            .fontWeight(viewModel.isMotionConnected ? .semibold : .regular)
+                    }
                 } footer: {
-                    Text("StandLess reads standing, activity, and sleep data from Apple Health to build your daily picture. Nothing leaves your device.")
+                    Text("StandLess reads standing, activity, and sleep data from Apple Health to build your daily picture. Motion access lets the inactivity reminder stay quiet while you're driving. Nothing leaves your device.")
                 }
 
                 Section {
@@ -91,5 +96,28 @@ private struct StandingGoalPicker: View {
             }
         }
         .navigationTitle("Standing Goal")
+    }
+}
+
+private struct ReminderIntervalPicker: View {
+    @Binding var selected: ReminderInterval
+
+    var body: some View {
+        List(ReminderInterval.allCases, id: \.self) { option in
+            Button {
+                selected = option
+            } label: {
+                HStack {
+                    Text(option.displayName)
+                        .foregroundStyle(.primary)
+                    Spacer()
+                    if option == selected {
+                        Image(systemName: "checkmark")
+                            .foregroundStyle(MinimalHealthAccessView.standingAccent)
+                    }
+                }
+            }
+        }
+        .navigationTitle("Inactivity Reminder")
     }
 }
