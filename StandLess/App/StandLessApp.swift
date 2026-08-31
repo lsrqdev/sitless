@@ -9,12 +9,20 @@ struct StandLessApp: App {
     private let connectivity: WatchConnectivityService
     private let motionManager = MotionManager()
     private let notificationManager = NotificationManager()
+    private let notificationDelegate: ReminderNotificationDelegate
 
     init() {
         let healthData = healthData
         let settingsStore = settingsStore
         let motionManager = motionManager
         let notificationManager = notificationManager
+
+        // Records every actual delivery of the reminder notification so NotificationManager's
+        // repeat-window suppression (R32) has a real lastFiredAt to compare against — without
+        // this, recordFired(at:) is never called and that safeguard can never engage.
+        let notificationDelegate = ReminderNotificationDelegate(notificationManager: notificationManager)
+        UNUserNotificationCenter.current().delegate = notificationDelegate
+        self.notificationDelegate = notificationDelegate
 
         let connectivity = WatchConnectivityService(settingsStore: settingsStore)
         settingsStore.onStandingGoalChanged = { [connectivity] goal in
@@ -116,5 +124,41 @@ private struct RootTabView: View {
                     .tabItem { Label("Settings", systemImage: "gearshape") }
             }
         }
+    }
+}
+
+/// Forwards actual notification deliveries back to `NotificationManager.recordFired(at:)` so the
+/// R32 repeat-window safeguard has a real baseline. Covers the two cases the OS gives apps a hook
+/// for — foreground delivery (`willPresent`) and the user later tapping it (`didReceive`); a
+/// notification delivered while the app is suspended in the background has no delegate callback at
+/// all, which is the same best-effort limitation already documented in README.md.
+final class ReminderNotificationDelegate: NSObject, UNUserNotificationCenterDelegate {
+    private let notificationManager: NotificationManager
+
+    init(notificationManager: NotificationManager) {
+        self.notificationManager = notificationManager
+    }
+
+    private func recordIfReminder(_ notification: UNNotification) {
+        guard notification.request.identifier == NotificationManager.requestIdentifier else { return }
+        notificationManager.recordFired(at: Date())
+    }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        recordIfReminder(notification)
+        completionHandler([.banner, .sound])
+    }
+
+    func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        recordIfReminder(response.notification)
+        completionHandler()
     }
 }
