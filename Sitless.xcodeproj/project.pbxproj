@@ -1,0 +1,722 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		000000000000000000000014 /* SitlessApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000A /* SitlessApp.swift */; };
+		000000000000000000000015 /* MinimalHealthAccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000B /* MinimalHealthAccessView.swift */; };
+		000000000000000000000016 /* TodayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000C /* TodayView.swift */; };
+		000000000000000000000017 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000D /* DiagnosticsView.swift */; };
+		000000000000000000000018 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* TodayViewModel.swift */; };
+		000000000000000000000019 /* TodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000011 /* TodayViewModelTests.swift */; };
+		00000000000000000000001A /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000002E /* SitlessKit */; };
+		00000000000000000000001B /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000002F /* SitlessKit */; };
+		000000000000000000000038 /* GoalProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000032 /* GoalProgressView.swift */; };
+		000000000000000000000039 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000033 /* SettingsView.swift */; };
+		00000000000000000000003A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000034 /* SettingsViewModel.swift */; };
+		00000000000000000000003B /* TrendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000035 /* TrendsViewModel.swift */; };
+		00000000000000000000003C /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000036 /* TrendsView.swift */; };
+		00000000000000000000003D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* Localizable.xcstrings */; };
+		000000000000000000000044 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000040 /* OnboardingViewModel.swift */; };
+		000000000000000000000045 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000041 /* OnboardingView.swift */; };
+		000000000000000000000046 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000042 /* TimelineView.swift */; };
+		000000000000000000000047 /* MetricRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000043 /* MetricRow.swift */; };
+		00000000000000000000004E /* SitlessWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000048 /* SitlessWatchApp.swift */; };
+		00000000000000000000004F /* WatchHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000049 /* WatchHomeViewModel.swift */; };
+		000000000000000000000050 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004A /* WatchHomeView.swift */; };
+		000000000000000000000051 /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000060 /* SitlessKit */; };
+		000000000000000000000052 /* Sitless Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004D /* Sitless Watch App.app */; settings = {ATTRIBUTES = (RemoveHeaderFilesOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		000000000000000000000031 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00000000000000000000001C;
+			remoteInfo = Sitless;
+		};
+		00000000000000000000005B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000000000056;
+			remoteInfo = "Sitless Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		00000000000000000000005A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				000000000000000000000052 /* Sitless Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		00000000000000000000000A /* SitlessApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitlessApp.swift; sourceTree = "<group>"; };
+		00000000000000000000000B /* MinimalHealthAccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinimalHealthAccessView.swift; sourceTree = "<group>"; };
+		00000000000000000000000C /* TodayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayView.swift; sourceTree = "<group>"; };
+		00000000000000000000000D /* DiagnosticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsView.swift; sourceTree = "<group>"; };
+		00000000000000000000000E /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		00000000000000000000000F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		000000000000000000000010 /* Sitless.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sitless.entitlements; sourceTree = "<group>"; };
+		000000000000000000000011 /* TodayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModelTests.swift; sourceTree = "<group>"; };
+		000000000000000000000012 /* Sitless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sitless.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000013 /* SitlessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SitlessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000032 /* GoalProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalProgressView.swift; sourceTree = "<group>"; };
+		000000000000000000000033 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		000000000000000000000034 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000035 /* TrendsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000036 /* TrendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrendsView.swift; sourceTree = "<group>"; };
+		000000000000000000000037 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		000000000000000000000040 /* OnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewModel.swift; sourceTree = "<group>"; };
+		000000000000000000000041 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		000000000000000000000042 /* TimelineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineView.swift; sourceTree = "<group>"; };
+		000000000000000000000043 /* MetricRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetricRow.swift; sourceTree = "<group>"; };
+		000000000000000000000048 /* SitlessWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SitlessWatchApp.swift; sourceTree = "<group>"; };
+		000000000000000000000049 /* WatchHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHomeViewModel.swift; sourceTree = "<group>"; };
+		00000000000000000000004A /* WatchHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchHomeView.swift; sourceTree = "<group>"; };
+		00000000000000000000004B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		00000000000000000000004C /* SitlessWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SitlessWatch.entitlements; sourceTree = "<group>"; };
+		00000000000000000000004D /* Sitless Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sitless Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		00000000000000000000001F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000001A /* SitlessKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000022 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000001B /* SitlessKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000057 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000051 /* SitlessKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		000000000000000000000002 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000004 /* Sitless */,
+				000000000000000000000009 /* SitlessTests */,
+				000000000000000000000053 /* SitlessWatch */,
+				000000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000012 /* Sitless.app */,
+				000000000000000000000013 /* SitlessTests.xctest */,
+				00000000000000000000004D /* Sitless Watch App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		000000000000000000000004 /* Sitless */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000005 /* App */,
+				000000000000000000000006 /* Views */,
+				000000000000000000000008 /* ViewModels */,
+				00000000000000000000003F /* Resources */,
+				00000000000000000000000F /* Info.plist */,
+				000000000000000000000010 /* Sitless.entitlements */,
+			);
+			path = Sitless;
+			sourceTree = "<group>";
+		};
+		000000000000000000000005 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000A /* SitlessApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		000000000000000000000006 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000B /* MinimalHealthAccessView.swift */,
+				00000000000000000000000C /* TodayView.swift */,
+				000000000000000000000033 /* SettingsView.swift */,
+				000000000000000000000036 /* TrendsView.swift */,
+				000000000000000000000041 /* OnboardingView.swift */,
+				00000000000000000000003E /* Components */,
+				000000000000000000000007 /* Debug */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		000000000000000000000007 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000D /* DiagnosticsView.swift */,
+			);
+			path = Debug;
+			sourceTree = "<group>";
+		};
+		000000000000000000000008 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000000E /* TodayViewModel.swift */,
+				000000000000000000000034 /* SettingsViewModel.swift */,
+				000000000000000000000035 /* TrendsViewModel.swift */,
+				000000000000000000000040 /* OnboardingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		00000000000000000000003E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000032 /* GoalProgressView.swift */,
+				000000000000000000000042 /* TimelineView.swift */,
+				000000000000000000000043 /* MetricRow.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		00000000000000000000003F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000037 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		000000000000000000000009 /* SitlessTests */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000011 /* TodayViewModelTests.swift */,
+			);
+			path = SitlessTests;
+			sourceTree = "<group>";
+		};
+		000000000000000000000053 /* SitlessWatch */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000048 /* SitlessWatchApp.swift */,
+				000000000000000000000055 /* Views */,
+				000000000000000000000054 /* ViewModels */,
+				00000000000000000000004B /* Info.plist */,
+				00000000000000000000004C /* SitlessWatch.entitlements */,
+			);
+			path = SitlessWatch;
+			sourceTree = "<group>";
+		};
+		000000000000000000000054 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000049 /* WatchHomeViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		000000000000000000000055 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				00000000000000000000004A /* WatchHomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		00000000000000000000001C /* Sitless */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000025 /* Build configuration list for PBXNativeTarget "Sitless" */;
+			buildPhases = (
+				00000000000000000000001E /* Sources */,
+				00000000000000000000001F /* Frameworks */,
+				000000000000000000000020 /* Resources */,
+				00000000000000000000005A /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				00000000000000000000005C /* PBXTargetDependency */,
+			);
+			name = Sitless;
+			packageProductDependencies = (
+				00000000000000000000002E /* SitlessKit */,
+			);
+			productName = Sitless;
+			productReference = 000000000000000000000012 /* Sitless.app */;
+			productType = "com.apple.product-type.application";
+		};
+		000000000000000000000056 /* Sitless Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 00000000000000000000005F /* Build configuration list for PBXNativeTarget "Sitless Watch App" */;
+			buildPhases = (
+				000000000000000000000059 /* Sources */,
+				000000000000000000000057 /* Frameworks */,
+				000000000000000000000058 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Sitless Watch App";
+			packageProductDependencies = (
+				000000000000000000000060 /* SitlessKit */,
+			);
+			productName = "Sitless Watch App";
+			productReference = 00000000000000000000004D /* Sitless Watch App.app */;
+			productType = "com.apple.product-type.application";
+		};
+		00000000000000000000001D /* SitlessTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 000000000000000000000026 /* Build configuration list for PBXNativeTarget "SitlessTests" */;
+			buildPhases = (
+				000000000000000000000021 /* Sources */,
+				000000000000000000000022 /* Frameworks */,
+				000000000000000000000023 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				000000000000000000000030 /* PBXTargetDependency */,
+			);
+			name = SitlessTests;
+			packageProductDependencies = (
+				00000000000000000000002F /* SitlessKit */,
+			);
+			productName = SitlessTests;
+			productReference = 000000000000000000000013 /* SitlessTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		000000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					00000000000000000000001C = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					00000000000000000000001D = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 00000000000000000000001C;
+					};
+					000000000000000000000056 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+				};
+			};
+			buildConfigurationList = 000000000000000000000024 /* Build configuration list for PBXProject "Sitless" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 000000000000000000000002 /* Project */;
+			packageReferences = (
+				00000000000000000000002D /* XCLocalSwiftPackageReference "Packages/SitlessKit" */,
+			);
+			productRefGroup = 000000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				00000000000000000000001C /* Sitless */,
+				00000000000000000000001D /* SitlessTests */,
+				000000000000000000000056 /* Sitless Watch App */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		000000000000000000000020 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000003D /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000023 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000058 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		00000000000000000000001E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000014 /* SitlessApp.swift in Sources */,
+				000000000000000000000015 /* MinimalHealthAccessView.swift in Sources */,
+				000000000000000000000016 /* TodayView.swift in Sources */,
+				000000000000000000000017 /* DiagnosticsView.swift in Sources */,
+				000000000000000000000018 /* TodayViewModel.swift in Sources */,
+				000000000000000000000038 /* GoalProgressView.swift in Sources */,
+				000000000000000000000039 /* SettingsView.swift in Sources */,
+				00000000000000000000003A /* SettingsViewModel.swift in Sources */,
+				00000000000000000000003B /* TrendsViewModel.swift in Sources */,
+				00000000000000000000003C /* TrendsView.swift in Sources */,
+				000000000000000000000044 /* OnboardingViewModel.swift in Sources */,
+				000000000000000000000045 /* OnboardingView.swift in Sources */,
+				000000000000000000000046 /* TimelineView.swift in Sources */,
+				000000000000000000000047 /* MetricRow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000021 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				000000000000000000000019 /* TodayViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		000000000000000000000059 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00000000000000000000004E /* SitlessWatchApp.swift in Sources */,
+				00000000000000000000004F /* WatchHomeViewModel.swift in Sources */,
+				000000000000000000000050 /* WatchHomeView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		000000000000000000000030 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00000000000000000000001C /* Sitless */;
+			targetProxy = 000000000000000000000031 /* PBXContainerItemProxy */;
+		};
+		00000000000000000000005C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000000000056 /* Sitless Watch App */;
+			targetProxy = 00000000000000000000005B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		000000000000000000000027 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		000000000000000000000028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 5.0;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		000000000000000000000029 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Sitless/Sitless.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sitless/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		00000000000000000000002A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = Sitless/Sitless.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sitless/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		00000000000000000000002B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sitless.app/Sitless";
+			};
+			name = Debug;
+		};
+		00000000000000000000002C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app.tests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sitless.app/Sitless";
+			};
+			name = Release;
+		};
+		00000000000000000000005D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = SitlessWatch/SitlessWatch.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SitlessWatch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		00000000000000000000005E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CODE_SIGN_ENTITLEMENTS = SitlessWatch/SitlessWatch.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SitlessWatch/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sitless.app.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		000000000000000000000024 /* Build configuration list for PBXProject "Sitless" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000027 /* Debug */,
+				000000000000000000000028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000025 /* Build configuration list for PBXNativeTarget "Sitless" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				000000000000000000000029 /* Debug */,
+				00000000000000000000002A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		000000000000000000000026 /* Build configuration list for PBXNativeTarget "SitlessTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000002B /* Debug */,
+				00000000000000000000002C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		00000000000000000000005F /* Build configuration list for PBXNativeTarget "Sitless Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				00000000000000000000005D /* Debug */,
+				00000000000000000000005E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		00000000000000000000002D /* XCLocalSwiftPackageReference "Packages/SitlessKit" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "Packages/SitlessKit";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		00000000000000000000002E /* SitlessKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SitlessKit;
+		};
+		00000000000000000000002F /* SitlessKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SitlessKit;
+		};
+		000000000000000000000060 /* SitlessKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SitlessKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 000000000000000000000001 /* Project object */;
+}

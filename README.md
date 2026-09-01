@@ -1,6 +1,6 @@
-# StandLess
+# Sitless
 
-StandLess helps you see how much of your day you spend standing versus inactive, using data your
+Sitless helps you see how much of your day you spend standing versus inactive, using data your
 Apple Watch already measures in Apple Health. There's no account, no cloud backend, and no
 analytics — everything runs on your iPhone and Apple Watch, reading directly from Apple Health.
 
@@ -14,10 +14,10 @@ analytics — everything runs on your iPhone and Apple Watch, reading directly f
 
 ## Building and running
 
-1. Open `StandLess.xcodeproj` in Xcode.
-2. Select the `StandLess` scheme (or `StandLess Watch App` for the Watch companion) with your
+1. Open `Sitless.xcodeproj` in Xcode.
+2. Select the `Sitless` scheme (or `Sitless Watch App` for the Watch companion) with your
    physical device as the run destination.
-3. Build and run. On first launch, StandLess explains what it reads from Apple Health before the
+3. Build and run. On first launch, Sitless explains what it reads from Apple Health before the
    system permission prompt appears.
 
 ### Free vs. paid Apple Developer account
@@ -25,19 +25,19 @@ analytics — everything runs on your iPhone and Apple Watch, reading directly f
 Installing with a **free** Apple Developer account signs the app with a 7-day provisioning
 profile — after 7 days the app stops launching on your device until you rebuild and reinstall
 from Xcode. A **paid** Apple Developer Program membership issues a 1-year profile instead. This
-is an Apple platform limitation, not something StandLess works around.
+is an Apple platform limitation, not something Sitless works around.
 
 ## Running tests
 
 ```
-cd Packages/StandLessKit
-xcodebuild test -scheme StandLessKit
+cd Packages/SitlessKit
+xcodebuild test -scheme SitlessKit -destination "platform=iOS Simulator,name=iPhone 17 Pro"
 ```
 
 or, from the repository root:
 
 ```
-xcodebuild test -scheme StandLess -destination "generic/platform=iOS Simulator"
+xcodebuild test -scheme Sitless -destination "platform=iOS Simulator,name=iPhone 17 Pro"
 ```
 
 ## Privacy
@@ -51,9 +51,9 @@ xcodebuild test -scheme StandLess -destination "generic/platform=iOS Simulator"
 
 ## Inactivity reminders — known limitation
 
-StandLess can remind you to change position after a period of inactivity (Settings → Inactivity
+Sitless can remind you to change position after a period of inactivity (Settings → Inactivity
 reminder). It's implemented as a single rescheduling local notification: every time HealthKit
-reports new standing activity, StandLess cancels the pending reminder and schedules a new one
+reports new standing activity, Sitless cancels the pending reminder and schedules a new one
 `interval` minutes out, unless you're currently asleep, in a workout, or likely driving.
 
 iOS and watchOS give apps no supported way to run code continuously in the background to re-check
@@ -66,12 +66,12 @@ is (re)scheduled, not at the moment it's about to appear, so:
   triggering HealthKit update depends on the OS's background-delivery scheduler rather than a
   continuous timer.
 - If you fall asleep, start a workout, or start driving between the last reschedule and the
-  reminder's fire time, the reminder can still appear — StandLess re-evaluates suppression on
+  reminder's fire time, the reminder can still appear — Sitless re-evaluates suppression on
   every new signal it receives, but it cannot guarantee a check happens in the exact instant
   before delivery.
 - Workout detection relies on HealthKit's own workout samples, which are committed once a
-  session finishes rather than exposed live to other apps; StandLess treats a workout as active
+  session finishes rather than exposed live to other apps; Sitless treats a workout as active
   from its recorded start through a short grace period after its recorded end.
 
 This is the most reliable behavior available through Apple's public, supported APIs, without
-resorting to unreliable continuous background polling, which StandLess deliberately avoids.
+resorting to unreliable continuous background polling, which Sitless deliberately avoids.

@@ -1,0 +1,446 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "*Sedentary time is estimated from available activity data." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "*Sedentary time is estimated from available activity data."
+          }
+        }
+      }
+    },
+    "About Sitless" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Sitless"
+          }
+        }
+      }
+    },
+    "Active" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
+    "Allow Health Access" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Health Access"
+          }
+        }
+      }
+    },
+    "Allow Health access in Settings to see your standing time." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Allow Health access in Settings to see your standing time."
+          }
+        }
+      }
+    },
+    "Connect Apple Health" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connect Apple Health"
+          }
+        }
+      }
+    },
+    "Couldn't load trends. Try again shortly." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load trends. Try again shortly."
+          }
+        }
+      }
+    },
+    "Couldn't load your standing time. Try again shortly." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couldn't load your standing time. Try again shortly."
+          }
+        }
+      }
+    },
+    "Debug" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debug"
+          }
+        }
+      }
+    },
+    "ESTIMATED SEDENTARY TIME" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ESTIMATED SEDENTARY TIME"
+          }
+        }
+      }
+    },
+    "Health data isn't available on this device." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Health data isn't available on this device."
+          }
+        }
+      }
+    },
+    "Large stretches of today have insufficient data to classify, so they're shown as Unknown rather than guessed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Large stretches of today have insufficient data to classify, so they're shown as Unknown rather than guessed."
+          }
+        }
+      }
+    },
+    "No standing data yet" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No standing data yet"
+          }
+        }
+      }
+    },
+    "Partial data today" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Partial data today"
+          }
+        }
+      }
+    },
+    "STANDING" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "STANDING"
+          }
+        }
+      }
+    },
+    "Sedentary est." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedentary est."
+          }
+        }
+      }
+    },
+    "Sedentary estimate based on available data. Wear your Apple Watch to improve accuracy." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedentary estimate based on available data. Wear your Apple Watch to improve accuracy."
+          }
+        }
+      }
+    },
+    "Sedentary*" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sedentary*"
+          }
+        }
+      }
+    },
+    "Settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Shown only on days with enough data to estimate reliably." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shown only on days with enough data to estimate reliably."
+          }
+        }
+      }
+    },
+    "Sitless" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless"
+          }
+        }
+      }
+    },
+    "Sitless has no account, no cloud backend, and no third-party analytics. Your standing, activity, and sleep data stays on this device and inside Apple Health." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless has no account, no cloud backend, and no third-party analytics. Your standing, activity, and sleep data stays on this device and inside Apple Health."
+          }
+        }
+      }
+    },
+    "Sitless helps you understand how much of your day you spend standing." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless helps you understand how much of your day you spend standing."
+          }
+        }
+      }
+    },
+    "Sitless reads standing, activity, and sleep data from Apple Health to build your daily picture. Motion access lets the inactivity reminder stay quiet while you're driving. Nothing leaves your device." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless reads standing, activity, and sleep data from Apple Health to build your daily picture. Motion access lets the inactivity reminder stay quiet while you're driving. Nothing leaves your device."
+          }
+        }
+      }
+    },
+    "Sitless reads your standing time from Apple Health to show how much of today you spent standing versus sitting. Your health data always stays on this device." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless reads your standing time from Apple Health to show how much of today you spent standing versus sitting. Your health data always stays on this device."
+          }
+        }
+      }
+    },
+    "Sitless turns that information into simple daily and weekly trends." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sitless turns that information into simple daily and weekly trends."
+          }
+        }
+      }
+    },
+    "Sleep" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleep"
+          }
+        }
+      }
+    },
+    "Spend less time sitting." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spend less time sitting."
+          }
+        }
+      }
+    },
+    "Standing" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standing"
+          }
+        }
+      }
+    },
+    "Standing Goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standing Goal"
+          }
+        }
+      }
+    },
+    "Standing goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Standing goal"
+          }
+        }
+      }
+    },
+    "TODAY'S TIMELINE" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY'S TIMELINE"
+          }
+        }
+      }
+    },
+    "Today" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Today"
+          }
+        }
+      }
+    },
+    "Trends" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trends"
+          }
+        }
+      }
+    },
+    "Unknown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unknown"
+          }
+        }
+      }
+    },
+    "Version \\(Bundle.main.object(forInfoDictionaryKey: \"CFBundleShortVersionString\") as? String ?? \"1.0\")" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Version \\(Bundle.main.object(forInfoDictionaryKey: \"CFBundleShortVersionString\") as? String ?? \"1.0\")"
+          }
+        }
+      }
+    },
+    "Wear your Apple Watch normally and check again later." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wear your Apple Watch normally and check again later."
+          }
+        }
+      }
+    },
+    "Your Apple Watch already measures standing activity." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your Apple Watch already measures standing activity."
+          }
+        }
+      }
+    },
+    "Your health data stays private — on your device and inside Apple Health." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your health data stays private — on your device and inside Apple Health."
+          }
+        }
+      }
+    },
+    "\\(TodayView.formatted(current)) / \\(TodayView.formatted(goal))" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(TodayView.formatted(current)) / \\(TodayView.formatted(goal))"
+          }
+        }
+      }
+    },
+    "\\(TodayView.formatted(viewModel.periodAverage))/day" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(TodayView.formatted(viewModel.periodAverage))/day"
+          }
+        }
+      }
+    },
+    "\\(percentage)%" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(percentage)%"
+          }
+        }
+      }
+    },
+    "\\(viewModel.period.label) average" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\\(viewModel.period.label) average"
+          }
+        }
+      }
+    },
+    "of tracked awake time" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "of tracked awake time"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
