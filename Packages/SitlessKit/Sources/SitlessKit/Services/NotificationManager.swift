@@ -37,7 +37,11 @@ public struct SuppressionSnapshot: Sendable {
 /// resulting limitation). This fails closed: any suppressing condition, or too little time since
 /// the last reminder actually fired, blocks scheduling.
 public final class NotificationManager: @unchecked Sendable {
-    public static let requestIdentifier = "standless.inactivity"
+    public static let requestIdentifier = "sitless.inactivity"
+    /// Pre-rename identifier, cancel-only: a reminder scheduled before the StandLess → Sitless
+    /// rename may still be pending under it, so every `reschedule` clears both names and the user
+    /// is never left with a duplicate reminder or a stale one after turning reminders off.
+    public static let legacyRequestIdentifier = "standless.inactivity"
     /// Minimum gap enforced between two reminders, regardless of intervening movement (R32).
     public static let minimumRepeatGap: TimeInterval = 30 * 60
 
@@ -75,7 +79,7 @@ public final class NotificationManager: @unchecked Sendable {
         now: Date = Date(),
         snapshot: SuppressionSnapshot = SuppressionSnapshot()
     ) -> Date? {
-        center.removePendingNotificationRequests(withIdentifiers: [Self.requestIdentifier])
+        center.removePendingNotificationRequests(withIdentifiers: [Self.requestIdentifier, Self.legacyRequestIdentifier])
 
         guard let seconds = interval.duration, !shouldSuppress(now: now, snapshot: snapshot) else {
             return nil

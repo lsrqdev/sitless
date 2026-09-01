@@ -48,7 +48,23 @@ final class NotificationManagerTests: XCTestCase {
 
         manager.reschedule(interval: .fortyFive)
 
-        XCTAssertEqual(center.removedIdentifiers.first, [NotificationManager.requestIdentifier])
+        XCTAssertEqual(
+            center.removedIdentifiers.first,
+            [NotificationManager.requestIdentifier, NotificationManager.legacyRequestIdentifier]
+        )
+    }
+
+    func testUsesTheRenamedIdentifierAndCancelsThePreRenameOneToo() {
+        XCTAssertEqual(NotificationManager.requestIdentifier, "sitless.inactivity")
+        XCTAssertEqual(NotificationManager.legacyRequestIdentifier, "standless.inactivity")
+
+        let center = MockCenter()
+        let manager = NotificationManager(center: center)
+
+        manager.reschedule(interval: .off)
+
+        XCTAssertEqual(center.removedIdentifiers, [["sitless.inactivity", "standless.inactivity"]])
+        XCTAssertTrue(center.addedRequests.isEmpty)
     }
 
     func testSuppressesDuringSleep() {

@@ -6,8 +6,13 @@ import Foundation
 /// `WatchConnectivityService` (Phase 4) is what keeps their `StandingGoal` in sync.
 public final class SettingsStore: @unchecked Sendable {
     private let defaults: UserDefaults
-    private static let standingGoalKey = "standless.settings.standingGoalDuration"
-    private static let reminderIntervalKey = "standless.settings.reminderInterval"
+    private static let standingGoalKey = "sitless.settings.standingGoalDuration"
+    private static let reminderIntervalKey = "sitless.settings.reminderInterval"
+    /// Pre-rename keys, read once per store so an install whose data container survived the
+    /// StandLess → Sitless rename keeps the user's saved choices instead of silently reverting
+    /// to the defaults.
+    private static let legacyStandingGoalKey = "standless.settings.standingGoalDuration"
+    private static let legacyReminderIntervalKey = "standless.settings.reminderInterval"
 
     /// Invoked whenever `standingGoal` is set to a new value. The iPhone target wires this to
     /// `WatchConnectivityService.pushStandingGoal(_:)` so a goal change reaches the paired Watch
@@ -22,6 +27,25 @@ public final class SettingsStore: @unchecked Sendable {
 
     public init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
+        Self.migrateLegacyKeys(in: defaults)
+    }
+
+    /// Copies any value still stored under a pre-rename key over to its new key, exactly once.
+    /// A no-op when no old value exists, and it never overwrites a value already saved under the
+    /// new key — guarding on the new key being absent is what makes a second run idempotent, so
+    /// no separate "migrated" flag is needed. The raw stored value is copied verbatim, leaving
+    /// the existing invalid-value fallbacks in `standingGoal` / `reminderInterval` to apply on
+    /// read. Each device migrates its own `UserDefaults`; there is no shared container.
+    private static func migrateLegacyKeys(in defaults: UserDefaults) {
+        let pairs = [
+            (legacyStandingGoalKey, standingGoalKey),
+            (legacyReminderIntervalKey, reminderIntervalKey)
+        ]
+        for (legacyKey, newKey) in pairs {
+            guard defaults.object(forKey: newKey) == nil,
+                  let legacyValue = defaults.object(forKey: legacyKey) else { continue }
+            defaults.set(legacyValue, forKey: newKey)
+        }
     }
 
     public var standingGoal: StandingGoal {
