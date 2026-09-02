@@ -41,22 +41,22 @@
         }
       }
     },
-    "Allow Health access in Settings to see your standing time." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Allow Health access in Settings to see your standing time."
-          }
-        }
-      }
-    },
     "Connect Apple Health" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Connect Apple Health"
+          }
+        }
+      }
+    },
+    "Connected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Connected"
           }
         }
       }
@@ -127,6 +127,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No standing data yet"
+          }
+        }
+      }
+    },
+    "Not Connected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Connected"
           }
         }
       }
@@ -341,6 +351,16 @@
         }
       }
     },
+    "Unavailable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable"
+          }
+        }
+      }
+    },
     "Unknown" : {
       "localizations" : {
         "en" : {
@@ -361,12 +381,12 @@
         }
       }
     },
-    "Wear your Apple Watch normally and check again later." : {
+    "Wear your Apple Watch normally and check again later. If nothing appears, check that Sitless is allowed to read your standing time in the Health app, under Sharing." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wear your Apple Watch normally and check again later."
+            "value" : "Wear your Apple Watch normally and check again later. If nothing appears, check that Sitless is allowed to read your standing time in the Health app, under Sharing."
           }
         }
       }

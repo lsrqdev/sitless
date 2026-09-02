@@ -2,15 +2,17 @@ import XCTest
 @testable import SitlessKit
 
 final class MockHealthDataProviderTests: XCTestCase {
-    func testDefaultAuthorizationStateIsNotDetermined() {
+    func testDefaultAuthorizationStateIsNotDetermined() async {
         let mock = MockHealthDataProvider()
-        XCTAssertEqual(mock.authorizationState, .notDetermined)
+        let state = await mock.authorizationState
+        XCTAssertEqual(state, .notDetermined)
     }
 
-    func testRequestAuthorizationMarksAuthorized() async throws {
+    func testRequestAuthorizationMarksDetermined() async throws {
         let mock = MockHealthDataProvider()
         try await mock.requestAuthorization()
-        XCTAssertEqual(mock.authorizationState, .authorized)
+        let state = await mock.authorizationState
+        XCTAssertEqual(state, .determined)
         XCTAssertEqual(mock.requestAuthorizationCallCount, 1)
     }
 

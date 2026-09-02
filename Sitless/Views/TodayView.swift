@@ -34,8 +34,6 @@ struct TodayView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .unavailable:
             stateMessage("Health data isn't available on this device.")
-        case .denied:
-            stateMessage("Allow Health access in Settings to see your standing time.")
         case .noData:
             noDataBody
         case .queryFailure:
@@ -141,7 +139,7 @@ struct TodayView: View {
         VStack(spacing: 8) {
             Text("No standing data yet")
                 .font(.headline)
-            Text("Wear your Apple Watch normally and check again later.")
+            Text("Wear your Apple Watch normally and check again later. If nothing appears, check that Sitless is allowed to read your standing time in the Health app, under Sharing.")
                 .font(.body)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)

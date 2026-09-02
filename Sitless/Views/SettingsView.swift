@@ -29,14 +29,22 @@ struct SettingsView: View {
 
                 Section {
                     LabeledContent("Apple Health") {
-                        Text(viewModel.isHealthConnected ? "Connected" : "Not Connected")
-                            .foregroundStyle(viewModel.isHealthConnected ? MinimalHealthAccessView.standingAccent : .secondary)
-                            .fontWeight(viewModel.isHealthConnected ? .semibold : .regular)
+                        switch viewModel.healthConnection {
+                        case .connected:
+                            statusText("Connected", isConnected: true)
+                        case .notConnected:
+                            statusText("Not Connected", isConnected: false)
+                        case .unavailable:
+                            statusText("Unavailable", isConnected: false)
+                        case nil:
+                            ProgressView()
+                        }
                     }
                     LabeledContent("Motion access") {
-                        Text(viewModel.isMotionConnected ? "Connected" : "Not Connected")
-                            .foregroundStyle(viewModel.isMotionConnected ? MinimalHealthAccessView.standingAccent : .secondary)
-                            .fontWeight(viewModel.isMotionConnected ? .semibold : .regular)
+                        statusText(
+                            viewModel.isMotionConnected ? "Connected" : "Not Connected",
+                            isConnected: viewModel.isMotionConnected
+                        )
                     }
                 } footer: {
                     Text("Sitless reads standing, activity, and sleep data from Apple Health to build your daily picture. Motion access lets the inactivity reminder stay quiet while you're driving. Nothing leaves your device.")
@@ -49,7 +57,14 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .task { await viewModel.loadHealthConnection() }
         }
+    }
+
+    private func statusText(_ text: LocalizedStringKey, isConnected: Bool) -> some View {
+        Text(text)
+            .foregroundStyle(isConnected ? MinimalHealthAccessView.standingAccent : .secondary)
+            .fontWeight(isConnected ? .semibold : .regular)
     }
 }
 

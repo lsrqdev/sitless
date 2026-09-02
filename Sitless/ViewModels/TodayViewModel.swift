@@ -8,7 +8,6 @@ final class TodayViewModel {
     enum LoadState: Equatable {
         case loading
         case unavailable
-        case denied
         case noData
         case loaded
         /// Confidence is too low to trust a percentage or sedentary figure (R24); standing time
@@ -61,22 +60,23 @@ final class TodayViewModel {
     }
 
     /// Requests HealthKit authorization if it hasn't been decided yet, then loads today's data.
+    ///
+    /// Once the prompt has been answered the screen always loads: Apple never tells an app whether
+    /// a read was granted, so a denied read is indistinguishable from an empty Health database and
+    /// the no-data message — not a blocking one — is the honest thing to show.
     func start() async {
-        guard healthData.authorizationState != .unavailable else {
+        let authorization = await healthData.authorizationState
+        guard authorization != .unavailable else {
             state = .unavailable
             return
         }
-        if healthData.authorizationState == .notDetermined {
+        if authorization == .notDetermined {
             do {
                 try await healthData.requestAuthorization()
             } catch {
                 state = .queryFailure
                 return
             }
-        }
-        guard healthData.authorizationState == .authorized else {
-            state = .denied
-            return
         }
         await refresh()
     }

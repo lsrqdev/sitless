@@ -11,7 +11,6 @@ final class WatchHomeViewModel {
     enum LoadState: Equatable {
         case loading
         case unavailable
-        case denied
         case noData
         case loaded
         /// Confidence is too low to trust the yesterday comparison (R24-style honesty, mirrored
@@ -55,11 +54,12 @@ final class WatchHomeViewModel {
     /// there's no room on a single glanceable screen for an explanation step, so the system
     /// permission sheet is requested directly.
     func start() async {
-        guard healthData.authorizationState != .unavailable else {
+        let authorization = await healthData.authorizationState
+        guard authorization != .unavailable else {
             state = .unavailable
             return
         }
-        if healthData.authorizationState == .notDetermined {
+        if authorization == .notDetermined {
             do {
                 try await healthData.requestAuthorization()
             } catch {
@@ -67,10 +67,8 @@ final class WatchHomeViewModel {
                 return
             }
         }
-        guard healthData.authorizationState == .authorized else {
-            state = .denied
-            return
-        }
+        // An answered prompt is as much as the platform will say — read permission is never
+        // exposed — so the screen loads and lets an empty result speak for itself.
         await refresh()
     }
 

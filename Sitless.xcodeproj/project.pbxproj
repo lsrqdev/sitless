@@ -13,6 +13,7 @@
 		000000000000000000000017 /* DiagnosticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000D /* DiagnosticsView.swift */; };
 		000000000000000000000018 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000000E /* TodayViewModel.swift */; };
 		000000000000000000000019 /* TodayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000011 /* TodayViewModelTests.swift */; };
+		000000000000000000000062 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000061 /* SettingsViewModelTests.swift */; };
 		00000000000000000000001A /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000002E /* SitlessKit */; };
 		00000000000000000000001B /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 00000000000000000000002F /* SitlessKit */; };
 		000000000000000000000038 /* GoalProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000032 /* GoalProgressView.swift */; };
@@ -72,6 +73,7 @@
 		00000000000000000000000F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		000000000000000000000010 /* Sitless.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sitless.entitlements; sourceTree = "<group>"; };
 		000000000000000000000011 /* TodayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModelTests.swift; sourceTree = "<group>"; };
+		000000000000000000000061 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
 		000000000000000000000012 /* Sitless.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sitless.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000013 /* SitlessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SitlessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000032 /* GoalProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalProgressView.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000011 /* TodayViewModelTests.swift */,
+				000000000000000000000061 /* SettingsViewModelTests.swift */,
 			);
 			path = SitlessTests;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				000000000000000000000019 /* TodayViewModelTests.swift in Sources */,
+				000000000000000000000062 /* SettingsViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

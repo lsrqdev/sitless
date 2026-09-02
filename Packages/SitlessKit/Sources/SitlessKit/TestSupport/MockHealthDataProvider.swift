@@ -57,7 +57,7 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
 
     public func requestAuthorization() async throws {
         requestAuthorizationCallCount += 1
-        authorizationState = .authorized
+        authorizationState = .determined
     }
 
     public func standingIntervals(in range: DateInterval) async throws -> [ActivityInterval] {

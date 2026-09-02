@@ -25,10 +25,8 @@ struct WatchHomeView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
         case .unavailable:
             stateMessage("Health data isn't available on this device.")
-        case .denied:
-            stateMessage("Allow Health access in Settings to see your standing time.")
         case .noData:
-            stateMessage("No standing data yet. Wear your Apple Watch normally and check again later.")
+            stateMessage("No standing data yet. Wear your Apple Watch normally, or check Sitless in the Health app under Sharing.")
         case .queryFailure:
             stateMessage("Couldn't load your standing time.")
         case .loaded:
