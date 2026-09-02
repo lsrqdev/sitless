@@ -11,18 +11,29 @@ public protocol NotificationCenterScheduling {
 extension UNUserNotificationCenter: NotificationCenterScheduling {}
 
 /// Snapshot of the conditions `NotificationManager` consults before allowing a reminder to fire
-/// (R32). Built by the app layer from HealthKit sleep/workout data and `MotionManager`'s driving
-/// signal; kept as plain data here so the suppression logic below is unit-testable without
-/// HealthKit or CoreMotion.
+/// (R32, R52). Built by the app layer from HealthKit sleep/workout data, heart-rate recency and
+/// `MotionManager`'s driving signal; kept as plain data here so the suppression logic below is
+/// unit-testable without HealthKit or CoreMotion.
 public struct SuppressionSnapshot: Sendable {
     public var isAsleep: Bool
     public var isInWorkout: Bool
     public var isLikelyDriving: Bool
+    /// Whether the watch appears not to be on the user's wrist right now (R52). A reminder about
+    /// sitting still is meaningless while the device is on a charger or a nightstand, so this
+    /// suppresses exactly like the other three flags. Defaults to `false`, which keeps every
+    /// existing call site and the iPhone-only user's behaviour unchanged.
+    public var isOffWrist: Bool
 
-    public init(isAsleep: Bool = false, isInWorkout: Bool = false, isLikelyDriving: Bool = false) {
+    public init(
+        isAsleep: Bool = false,
+        isInWorkout: Bool = false,
+        isLikelyDriving: Bool = false,
+        isOffWrist: Bool = false
+    ) {
         self.isAsleep = isAsleep
         self.isInWorkout = isInWorkout
         self.isLikelyDriving = isLikelyDriving
+        self.isOffWrist = isOffWrist
     }
 }
 
@@ -62,7 +73,7 @@ public final class NotificationManager: @unchecked Sendable {
 
     /// Whether scheduling is currently blocked.
     public func shouldSuppress(now: Date, snapshot: SuppressionSnapshot) -> Bool {
-        if snapshot.isAsleep || snapshot.isInWorkout || snapshot.isLikelyDriving {
+        if snapshot.isAsleep || snapshot.isInWorkout || snapshot.isLikelyDriving || snapshot.isOffWrist {
             return true
         }
         if let lastFiredAt, now.timeIntervalSince(lastFiredAt) < Self.minimumRepeatGap {

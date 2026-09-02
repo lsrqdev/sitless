@@ -21,6 +21,32 @@ final class MockHealthDataProviderTests: XCTestCase {
         XCTAssertEqual(result, [interval])
     }
 
+    func testOffWristSpansDefaultToEmpty() async throws {
+        let mock = MockHealthDataProvider()
+        let result = try await mock.offWristSpans(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertTrue(result.isEmpty)
+    }
+
+    func testOffWristSpansReturnsConfiguredResult() async throws {
+        let span = DateInterval(start: Date(timeIntervalSince1970: 0), end: Date(timeIntervalSince1970: 3600))
+        let mock = MockHealthDataProvider(offWristSpansResult: .success([span]))
+        let result = try await mock.offWristSpans(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertEqual(result, [span])
+    }
+
+    func testLastHeartRateSampleDateDefaultsToNil() async throws {
+        let mock = MockHealthDataProvider()
+        let result = try await mock.lastHeartRateSampleDate(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertNil(result)
+    }
+
+    func testLastHeartRateSampleDateReturnsConfiguredResult() async throws {
+        let sampleDate = Date(timeIntervalSince1970: 3600)
+        let mock = MockHealthDataProvider(lastHeartRateSampleDateResult: .success(sampleDate))
+        let result = try await mock.lastHeartRateSampleDate(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertEqual(result, sampleDate)
+    }
+
     func testStandingIntervalsPropagatesFailure() async {
         struct SampleError: Error {}
         let mock = MockHealthDataProvider(standingIntervalsResult: .failure(SampleError()))

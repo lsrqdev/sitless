@@ -124,6 +124,10 @@ final class TodayViewModel {
             let todayStanding = intervals.filter { calendar.isDate($0.start, inSameDayAs: startOfToday) }
             async let activity = healthData.activityIntervals(in: window)
             async let sleep = healthData.sleepIntervals(in: window)
+            // R51: spans the watch wasn't worn, so charging breaks land in unknown time rather
+            // than being counted as estimated sitting time. R45: a failure here degrades to no
+            // spans at all, leaving the day's summary exactly as it would have been.
+            async let offWrist = healthData.offWristSpans(in: window)
             async let steps = healthData.steps(in: window)
             async let standHours = healthData.standHours(in: window)
 
@@ -131,6 +135,7 @@ final class TodayViewModel {
                 standing: todayStanding,
                 activity: try await activity,
                 sleep: try await sleep,
+                offWrist: (try? await offWrist) ?? [],
                 steps: try await steps,
                 standHours: try await standHours,
                 observationWindow: window,

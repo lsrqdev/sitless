@@ -27,6 +27,7 @@ public struct ActivityCalculator: ActivityCalculating {
         standing: [ActivityInterval],
         activity: [ActivityInterval],
         sleep: [ActivityInterval],
+        offWrist: [DateInterval],
         steps: Int?,
         standHours: Int?,
         observationWindow: DateInterval,
@@ -35,10 +36,11 @@ public struct ActivityCalculator: ActivityCalculating {
         let clippedStanding = clip(standing, to: observationWindow)
         let clippedActivity = clip(activity, to: observationWindow)
         let clippedSleep = clip(sleep, to: observationWindow)
+        let clippedOffWrist = clipSpans(offWrist, to: observationWindow)
 
         let known = Self.mergeIntervals(clippedStanding + clippedActivity + clippedSleep)
         let gaps = Self.gaps(in: known, within: observationWindow)
-        let classifiedGaps = Self.classify(gaps: gaps, knownSamples: known)
+        let classifiedGaps = Self.classify(gaps: gaps, knownSamples: known, offWrist: clippedOffWrist)
         let timeline = (known + classifiedGaps).sorted { $0.start < $1.start }
 
         let standingDuration = duration(of: timeline, state: .standing)
@@ -86,6 +88,31 @@ public struct ActivityCalculator: ActivityCalculating {
             guard end > start else { return nil }
             return ActivityInterval(start: start, end: end, state: interval.state)
         }
+    }
+
+    /// Clips off-wrist spans to the observation window and merges any overlap, mirroring how
+    /// every other input is clipped (R47). An overnight charge that straddles midnight therefore
+    /// contributes only its own day's portion to each day's summary.
+    private func clipSpans(_ spans: [DateInterval], to window: DateInterval) -> [DateInterval] {
+        let clipped = spans.compactMap { span -> DateInterval? in
+            let start = max(span.start, window.start)
+            let end = min(span.end, window.end)
+            guard end > start else { return nil }
+            return DateInterval(start: start, end: end)
+        }.sorted { $0.start < $1.start }
+
+        guard var current = clipped.first else { return [] }
+        var merged: [DateInterval] = []
+        for span in clipped.dropFirst() {
+            if span.start <= current.end {
+                current = DateInterval(start: current.start, end: max(current.end, span.end))
+            } else {
+                merged.append(current)
+                current = span
+            }
+        }
+        merged.append(current)
+        return merged
     }
 
     /// Higher wins when two different states overlap in time.
@@ -174,15 +201,60 @@ public struct ActivityCalculator: ActivityCalculating {
     /// `maxInferredSedentaryGap` is `.unknown` (R15) — there isn't enough evidence around it to
     /// call it confidently sedentary. Shorter gaps between two known samples are `.sedentary`,
     /// the estimated-remainder rule from R14.
-    private static func classify(gaps: [DateInterval], knownSamples: [ActivityInterval]) -> [ActivityInterval] {
-        guard let firstStart = knownSamples.map(\.start).min(), let lastEnd = knownSamples.map(\.end).max() else {
-            return gaps.map { ActivityInterval(start: $0.start, end: $0.end, state: .unknown) }
+    ///
+    /// Each gap is then split at `offWrist` boundaries (R48): the portions the watch was not being
+    /// worn become `.unknown`, and every remaining portion keeps whichever state the rule above
+    /// gave the gap as a whole. The rule is deliberately evaluated on the undivided gap, never on
+    /// the pieces, so splitting can never turn part of a long `.unknown` gap into `.sedentary`.
+    private static func classify(
+        gaps: [DateInterval],
+        knownSamples: [ActivityInterval],
+        offWrist: [DateInterval]
+    ) -> [ActivityInterval] {
+        let firstStart = knownSamples.map(\.start).min()
+        let lastEnd = knownSamples.map(\.end).max()
+        return gaps.flatMap { gap -> [ActivityInterval] in
+            let state: ActivityState
+            if let firstStart, let lastEnd {
+                let isEdgeGap = gap.start < firstStart || gap.end > lastEnd
+                state = (isEdgeGap || gap.duration > maxInferredSedentaryGap) ? .unknown : .sedentary
+            } else {
+                state = .unknown
+            }
+            return split(gap: gap, at: offWrist, otherwise: state)
         }
-        return gaps.map { gap in
-            let isEdgeGap = gap.start < firstStart || gap.end > lastEnd
-            let state: ActivityState = (isEdgeGap || gap.duration > maxInferredSedentaryGap) ? .unknown : .sedentary
-            return ActivityInterval(start: gap.start, end: gap.end, state: state)
+    }
+
+    /// Splits one gap into `.unknown` pieces wherever it overlaps an off-wrist span and `state`
+    /// pieces everywhere else (R48). `offWrist` is expected already clipped, sorted and merged.
+    private static func split(
+        gap: DateInterval,
+        at offWrist: [DateInterval],
+        otherwise state: ActivityState
+    ) -> [ActivityInterval] {
+        let overlaps = offWrist.compactMap { span -> DateInterval? in
+            let start = max(span.start, gap.start)
+            let end = min(span.end, gap.end)
+            guard end > start else { return nil }
+            return DateInterval(start: start, end: end)
         }
+        guard !overlaps.isEmpty else {
+            return [ActivityInterval(start: gap.start, end: gap.end, state: state)]
+        }
+
+        var pieces: [ActivityInterval] = []
+        var cursor = gap.start
+        for span in overlaps {
+            if span.start > cursor {
+                pieces.append(ActivityInterval(start: cursor, end: span.start, state: state))
+            }
+            pieces.append(ActivityInterval(start: span.start, end: span.end, state: .unknown))
+            cursor = span.end
+        }
+        if cursor < gap.end {
+            pieces.append(ActivityInterval(start: cursor, end: gap.end, state: state))
+        }
+        return pieces
     }
 
     private func duration(of timeline: [ActivityInterval], state: ActivityState) -> TimeInterval {
