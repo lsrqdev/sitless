@@ -15,9 +15,12 @@ analytics — everything runs on your iPhone and Apple Watch, reading directly f
 ## Building and running
 
 1. Open `Sitless.xcodeproj` in Xcode.
-2. Select the `Sitless` scheme (or `Sitless Watch App` for the Watch companion) with your
+2. Select a development team. For each of the `Sitless`, `Sitless Watch App` and `SitlessTests`
+   targets, open **Signing & Capabilities**, leave **Automatically manage signing** checked, and
+   pick your team (your Personal Team is enough). Device builds will not sign without this.
+3. Select the `Sitless` scheme (or `Sitless Watch App` for the Watch companion) with your
    physical device as the run destination.
-3. Build and run. On first launch, Sitless explains what it reads from Apple Health before the
+4. Build and run. On first launch, Sitless explains what it reads from Apple Health before the
    system permission prompt appears.
 
 ### Free vs. paid Apple Developer account
