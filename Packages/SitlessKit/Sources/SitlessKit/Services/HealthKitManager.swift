@@ -148,6 +148,11 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
         return spans
     }
 
+    public func lastHeartRateSampleDate(in range: DateInterval) async throws -> Date? {
+        // Samples come back sorted ascending by start date, so the last one is the most recent.
+        try await quantitySamples(for: Self.heartRateType, in: range).last?.startDate
+    }
+
     public func steps(in range: DateInterval) async throws -> Int {
         let samples = try await quantitySamples(for: Self.stepCountType, in: range)
         let total = samples.reduce(0.0) { $0 + $1.quantity.doubleValue(for: .count()) }

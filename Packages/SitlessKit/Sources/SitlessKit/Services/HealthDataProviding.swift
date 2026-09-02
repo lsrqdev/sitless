@@ -25,6 +25,15 @@ public protocol HealthDataProviding: Sendable {
     /// an Apple Watch. Returns an empty result rather than throwing when heart-rate data is
     /// unavailable, unauthorized, or the query fails (R45).
     func offWristSpans(in range: DateInterval) async throws -> [DateInterval]
+    /// The start date of the most recent heart-rate sample within `range`, or `nil` when the range
+    /// holds none (R53). Used by the app layer for the *live* off-wrist check that suppresses the
+    /// inactivity reminder, which `offWristSpans(in:)` cannot answer: that method only reports
+    /// stretches *between* two samples (R42), so an ongoing off-wrist stretch — silence running all
+    /// the way to now, with no later sample to close it — is never one of its spans.
+    ///
+    /// `nil` means "no evidence a wearable was on the body at all", not "off the wrist": someone
+    /// using Sitless without an Apple Watch must never have a reminder suppressed by this.
+    func lastHeartRateSampleDate(in range: DateInterval) async throws -> Date?
     func steps(in range: DateInterval) async throws -> Int
     func rawDiagnostics(in range: DateInterval) async throws -> HealthDiagnosticsSnapshot
     /// Wraps `HKObserverQuery` + background delivery for the primary standing type. The handler

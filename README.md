@@ -77,7 +77,9 @@ This is best-effort, and deliberately conservative in one direction:
 Sitless can remind you to change position after a period of inactivity (Settings → Inactivity
 reminder). It's implemented as a single rescheduling local notification: every time HealthKit
 reports new standing activity, Sitless cancels the pending reminder and schedules a new one
-`interval` minutes out, unless you're currently asleep, in a workout, or likely driving.
+`interval` minutes out, unless you're currently asleep, in a workout, likely driving, or your
+watch isn't on your wrist (inferred from heart-rate recency, using a more generous silence
+threshold than the one above, because data reaching the iPhone from the watch can lag by minutes).
 
 iOS and watchOS give apps no supported way to run code continuously in the background to re-check
 these conditions in the final seconds before a notification fires, and HealthKit's background

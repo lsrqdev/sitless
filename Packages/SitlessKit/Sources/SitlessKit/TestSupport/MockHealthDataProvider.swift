@@ -15,6 +15,9 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
     /// R46: defaults to no off-wrist spans, so every existing test and call site keeps exactly the
     /// behaviour it had before off-wrist detection existed.
     public var offWristSpansResult: Result<[DateInterval], Error>
+    /// R53: defaults to no heart-rate sample, which is the iPhone-only user's situation and leaves
+    /// the live off-wrist reminder check inert for every existing test and call site.
+    public var lastHeartRateSampleDateResult: Result<Date?, Error>
     public var stepsResult: Result<Int, Error>
     public var rawDiagnosticsResult: Result<HealthDiagnosticsSnapshot, Error>
     public var isInActiveWorkoutResult: Result<Bool, Error>
@@ -30,6 +33,7 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
         activityIntervalsResult: Result<[ActivityInterval], Error> = .success([]),
         sleepIntervalsResult: Result<[ActivityInterval], Error> = .success([]),
         offWristSpansResult: Result<[DateInterval], Error> = .success([]),
+        lastHeartRateSampleDateResult: Result<Date?, Error> = .success(nil),
         stepsResult: Result<Int, Error> = .success(0),
         rawDiagnosticsResult: Result<HealthDiagnosticsSnapshot, Error>? = nil,
         isInActiveWorkoutResult: Result<Bool, Error> = .success(false)
@@ -40,6 +44,7 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
         self.activityIntervalsResult = activityIntervalsResult
         self.sleepIntervalsResult = sleepIntervalsResult
         self.offWristSpansResult = offWristSpansResult
+        self.lastHeartRateSampleDateResult = lastHeartRateSampleDateResult
         self.stepsResult = stepsResult
         self.rawDiagnosticsResult = rawDiagnosticsResult ?? .success(
             HealthDiagnosticsSnapshot(
@@ -73,6 +78,10 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
 
     public func offWristSpans(in range: DateInterval) async throws -> [DateInterval] {
         try offWristSpansResult.get()
+    }
+
+    public func lastHeartRateSampleDate(in range: DateInterval) async throws -> Date? {
+        try lastHeartRateSampleDateResult.get()
     }
 
     public func steps(in range: DateInterval) async throws -> Int {

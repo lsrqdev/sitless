@@ -65,8 +65,25 @@ struct SitlessApp: App {
         }
     }
 
-    /// Rebuilds the current suppression snapshot (R32) from HealthKit sleep/workout data and
-    /// `MotionManager`'s driving signal, then reschedules the pending reminder against it.
+    /// Live off-wrist threshold (R53): the reminder is suppressed when the most recent heart-rate
+    /// sample the phone holds is older than this, which is the best available evidence that the
+    /// watch is not on the wrist right now. Deliberately longer than the retrospective
+    /// `HealthKitManager.offWristHeartRateGap` used when building the daily summary: that one runs
+    /// over data that has already settled, while this one runs against whatever has reached the
+    /// phone so far, and Watch-to-iPhone HealthKit sync latency can leave recent samples absent for
+    /// many minutes while the watch is still being worn. Erring short would swallow reminders the
+    /// user should have received; erring long only delays the point at which an off-wrist stretch
+    /// starts suppressing, and a skipped reminder is the preferred failure over a spurious one.
+    private static let liveOffWristHeartRateGap: TimeInterval = 45 * 60
+
+    /// How far back the live off-wrist check looks for a heart-rate sample. Wide enough to cover a
+    /// night on the charger, so a watch left off since the previous evening still reads as
+    /// off-wrist rather than as no-watch-at-all.
+    private static let liveOffWristLookback: TimeInterval = 12 * 3600
+
+    /// Rebuilds the current suppression snapshot (R32, R52) from HealthKit sleep/workout data,
+    /// heart-rate recency and `MotionManager`'s driving signal, then reschedules the pending
+    /// reminder against it.
     private static func rescheduleReminder(
         healthData: HealthDataProviding,
         settingsStore: SettingsStore,
@@ -88,7 +105,19 @@ struct SitlessApp: App {
             motionManager.isLikelyDriving(now: now) { continuation.resume(returning: $0) }
         }
 
-        let snapshot = SuppressionSnapshot(isAsleep: isAsleep, isInWorkout: isInWorkout, isLikelyDriving: isLikelyDriving)
+        // R53: no heart-rate sample at all means no evidence a wearable was ever on the body, so
+        // an iPhone-only user is never suppressed by this. `try?` flattens a failed query into the
+        // same `nil`, and both fall back to `false` — matching the `?? false` treatment above.
+        let heartRateWindow = DateInterval(start: now.addingTimeInterval(-liveOffWristLookback), end: now)
+        let lastHeartRate = try? await healthData.lastHeartRateSampleDate(in: heartRateWindow)
+        let isOffWrist = lastHeartRate.map { now.timeIntervalSince($0) > liveOffWristHeartRateGap } ?? false
+
+        let snapshot = SuppressionSnapshot(
+            isAsleep: isAsleep,
+            isInWorkout: isInWorkout,
+            isLikelyDriving: isLikelyDriving,
+            isOffWrist: isOffWrist
+        )
         notificationManager.reschedule(interval: interval, now: now, snapshot: snapshot)
     }
 }

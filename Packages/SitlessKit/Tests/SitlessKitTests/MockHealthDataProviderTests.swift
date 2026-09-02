@@ -34,6 +34,19 @@ final class MockHealthDataProviderTests: XCTestCase {
         XCTAssertEqual(result, [span])
     }
 
+    func testLastHeartRateSampleDateDefaultsToNil() async throws {
+        let mock = MockHealthDataProvider()
+        let result = try await mock.lastHeartRateSampleDate(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertNil(result)
+    }
+
+    func testLastHeartRateSampleDateReturnsConfiguredResult() async throws {
+        let sampleDate = Date(timeIntervalSince1970: 3600)
+        let mock = MockHealthDataProvider(lastHeartRateSampleDateResult: .success(sampleDate))
+        let result = try await mock.lastHeartRateSampleDate(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertEqual(result, sampleDate)
+    }
+
     func testStandingIntervalsPropagatesFailure() async {
         struct SampleError: Error {}
         let mock = MockHealthDataProvider(standingIntervalsResult: .failure(SampleError()))

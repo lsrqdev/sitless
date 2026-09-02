@@ -97,6 +97,27 @@ final class NotificationManagerTests: XCTestCase {
         XCTAssertTrue(center.addedRequests.isEmpty)
     }
 
+    func testSuppressesWhileOffWrist() {
+        let center = MockCenter()
+        let manager = NotificationManager(center: center)
+        let snapshot = SuppressionSnapshot(isOffWrist: true)
+
+        XCTAssertTrue(manager.shouldSuppress(now: Date(), snapshot: snapshot))
+        XCTAssertNil(manager.reschedule(interval: .fortyFive, snapshot: snapshot))
+        XCTAssertTrue(center.addedRequests.isEmpty)
+    }
+
+    func testOffWristDefaultsToFalseSoAnAllClearSnapshotStillSchedules() {
+        let center = MockCenter()
+        let manager = NotificationManager(center: center)
+        let snapshot = SuppressionSnapshot()
+
+        XCTAssertFalse(snapshot.isOffWrist)
+        XCTAssertFalse(manager.shouldSuppress(now: Date(), snapshot: snapshot))
+        XCTAssertNotNil(manager.reschedule(interval: .fortyFive, snapshot: snapshot))
+        XCTAssertEqual(center.addedRequests.count, 1)
+    }
+
     func testSuppressesWithinRepeatWindowAfterAFiredReminder() {
         let now = Date()
         let center = MockCenter()
