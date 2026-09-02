@@ -4,6 +4,8 @@
 <dict>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Sitless reads your standing time from Apple Health to show how much of today you spent standing versus sitting. Your health data is never shared and stays on this device.</string>
+	<key>WKApplication</key>
+	<true/>
 	<key>WKCompanionAppBundleIdentifier</key>
 	<string>com.sitless.app</string>
 	<key>WKRunsIndependentlyOfCompanionApp</key>
