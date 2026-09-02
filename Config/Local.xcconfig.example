@@ -1,0 +1,6 @@
+// Copy this file to Config/Local.xcconfig and set your own Apple Developer
+// team ID. Config/Local.xcconfig is git-ignored, so the value stays on your
+// machine. Needed only for device builds; simulator builds and tests work
+// without it.
+
+DEVELOPMENT_TEAM = <YOUR_TEAM_ID>

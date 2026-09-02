@@ -1,12 +1,122 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%.1f %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.1f %@"
+          }
+        }
+      }
+    },
+    "%@ (%lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ (%lld)"
+          }
+        }
+      }
+    },
+    "%@ / %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ / %@"
+          }
+        }
+      }
+    },
+    "%@ average" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ average"
+          }
+        }
+      }
+    },
+    "%@ standing today" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ standing today"
+          }
+        }
+      }
+    },
+    "%@ – %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ – %@"
+          }
+        }
+      }
+    },
+    "%@/day" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@/day"
+          }
+        }
+      }
+    },
+    "%@: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@: %@"
+          }
+        }
+      }
+    },
+    "%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        }
+      }
+    },
+    "%lld%%" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld%%"
+          }
+        }
+      }
+    },
     "*Sedentary time is estimated from available activity data." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "*Sedentary time is estimated from available activity data."
+          }
+        }
+      }
+    },
+    "About" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About"
           }
         }
       }
@@ -22,6 +132,7 @@
       }
     },
     "Active" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -41,7 +152,18 @@
         }
       }
     },
+    "Apple Health" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Health"
+          }
+        }
+      }
+    },
     "Connect Apple Health" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -61,7 +183,18 @@
         }
       }
     },
+    "Continue" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue"
+          }
+        }
+      }
+    },
     "Couldn't load trends. Try again shortly." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -72,11 +205,22 @@
       }
     },
     "Couldn't load your standing time. Try again shortly." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Couldn't load your standing time. Try again shortly."
+          }
+        }
+      }
+    },
+    "Day" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Day"
           }
         }
       }
@@ -91,6 +235,16 @@
         }
       }
     },
+    "Diagnostics" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diagnostics"
+          }
+        }
+      }
+    },
     "ESTIMATED SEDENTARY TIME" : {
       "localizations" : {
         "en" : {
@@ -101,12 +255,63 @@
         }
       }
     },
+    "Error" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        }
+      }
+    },
+    "Goal" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal"
+          }
+        }
+      }
+    },
+    "Goal %@, %lld percent complete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Goal %@, %lld percent complete"
+          }
+        }
+      }
+    },
     "Health data isn't available on this device." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Health data isn't available on this device."
+          }
+        }
+      }
+    },
+    "Inactivity Reminder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactivity Reminder"
+          }
+        }
+      }
+    },
+    "Inactivity reminder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inactivity reminder"
           }
         }
       }
@@ -117,6 +322,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Large stretches of today have insufficient data to classify, so they're shown as Unknown rather than guessed."
+          }
+        }
+      }
+    },
+    "Motion access" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Motion access"
           }
         }
       }
@@ -151,6 +366,36 @@
         }
       }
     },
+    "Period" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Period"
+          }
+        }
+      }
+    },
+    "Query Range" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Query Range"
+          }
+        }
+      }
+    },
+    "Refresh" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Refresh"
+          }
+        }
+      }
+    },
     "STANDING" : {
       "localizations" : {
         "en" : {
@@ -162,6 +407,7 @@
       }
     },
     "Sedentary est." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -182,6 +428,7 @@
       }
     },
     "Sedentary*" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -232,6 +479,7 @@
       }
     },
     "Sitless helps you understand how much of your day you spend standing." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -262,6 +510,7 @@
       }
     },
     "Sitless turns that information into simple daily and weekly trends." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -272,6 +521,7 @@
       }
     },
     "Sleep" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -282,6 +532,7 @@
       }
     },
     "Spend less time sitting." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -321,6 +572,26 @@
         }
       }
     },
+    "Steps" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steps"
+          }
+        }
+      }
+    },
+    "TODAY" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TODAY"
+          }
+        }
+      }
+    },
     "TODAY'S TIMELINE" : {
       "localizations" : {
         "en" : {
@@ -337,6 +608,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Today"
+          }
+        }
+      }
+    },
+    "Trending down" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trending down"
+          }
+        }
+      }
+    },
+    "Trending up" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trending up"
           }
         }
       }
@@ -362,6 +653,7 @@
       }
     },
     "Unknown" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -371,12 +663,12 @@
         }
       }
     },
-    "Version \\(Bundle.main.object(forInfoDictionaryKey: \"CFBundleShortVersionString\") as? String ?? \"1.0\")" : {
+    "Version %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Version \\(Bundle.main.object(forInfoDictionaryKey: \"CFBundleShortVersionString\") as? String ?? \"1.0\")"
+            "value" : "Version %@"
           }
         }
       }
@@ -392,6 +684,7 @@
       }
     },
     "Your Apple Watch already measures standing activity." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -402,51 +695,12 @@
       }
     },
     "Your health data stays private — on your device and inside Apple Health." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Your health data stays private — on your device and inside Apple Health."
-          }
-        }
-      }
-    },
-    "\\(TodayView.formatted(current)) / \\(TodayView.formatted(goal))" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\\(TodayView.formatted(current)) / \\(TodayView.formatted(goal))"
-          }
-        }
-      }
-    },
-    "\\(TodayView.formatted(viewModel.periodAverage))/day" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\\(TodayView.formatted(viewModel.periodAverage))/day"
-          }
-        }
-      }
-    },
-    "\\(percentage)%" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\\(percentage)%"
-          }
-        }
-      }
-    },
-    "\\(viewModel.period.label) average" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "\\(viewModel.period.label) average"
           }
         }
       }

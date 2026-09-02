@@ -4,3 +4,12 @@
 .swiftpm/
 DerivedData/
 xcuserdata/
+.DS_Store
+
+# Personal signing team — see Config/Local.xcconfig.example
+Config/Local.xcconfig
+
+# Xcode-generated workspaces (the shared schemes under
+# Sitless.xcodeproj/xcshareddata/ stay tracked)
+Sitless.xcodeproj/project.xcworkspace/
+/*.xcworkspace/

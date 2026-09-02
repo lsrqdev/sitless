@@ -29,6 +29,7 @@
 		00000000000000000000004E /* SitlessWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000048 /* SitlessWatchApp.swift */; };
 		00000000000000000000004F /* WatchHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000049 /* WatchHomeViewModel.swift */; };
 		000000000000000000000050 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004A /* WatchHomeView.swift */; };
+		000000000000000000000063 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* Localizable.xcstrings */; };
 		000000000000000000000051 /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000060 /* SitlessKit */; };
 		000000000000000000000052 /* Sitless Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004D /* Sitless Watch App.app */; settings = {ATTRIBUTES = (RemoveHeaderFilesOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -92,6 +93,7 @@
 		00000000000000000000004B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00000000000000000000004C /* SitlessWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SitlessWatch.entitlements; sourceTree = "<group>"; };
 		00000000000000000000004D /* Sitless Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sitless Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		000000000000000000000064 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,11 +127,20 @@
 		000000000000000000000002 /* Project */ = {
 			isa = PBXGroup;
 			children = (
+				000000000000000000000065 /* Config */,
 				000000000000000000000004 /* Sitless */,
 				000000000000000000000009 /* SitlessTests */,
 				000000000000000000000053 /* SitlessWatch */,
 				000000000000000000000003 /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		000000000000000000000065 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000064 /* Shared.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		000000000000000000000003 /* Products */ = {
@@ -382,6 +393,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				000000000000000000000063 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +458,7 @@
 /* Begin XCBuildConfiguration section */
 		000000000000000000000027 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 000000000000000000000064 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -478,6 +491,7 @@
 		};
 		000000000000000000000028 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 000000000000000000000064 /* Shared.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

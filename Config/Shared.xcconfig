@@ -1,0 +1,13 @@
+// Shared project-level build settings.
+//
+// Wired as the baseConfigurationReference of both project-level build
+// configurations, so all three targets (Sitless, Sitless Watch App,
+// SitlessTests) inherit from it.
+//
+// The signing team is deliberately not recorded here: it is a personal,
+// per-developer setting. Copy Local.xcconfig.example to Local.xcconfig and
+// put your team ID there. Local.xcconfig is git-ignored, so your choice never
+// shows up as a pending change. The include is optional, so a fresh clone
+// without the file still builds and tests on the simulator.
+
+#include? "Local.xcconfig"

@@ -15,13 +15,34 @@ analytics — everything runs on your iPhone and Apple Watch, reading directly f
 ## Building and running
 
 1. Open `Sitless.xcodeproj` in Xcode.
-2. Select a development team. For each of the `Sitless`, `Sitless Watch App` and `SitlessTests`
-   targets, open **Signing & Capabilities**, leave **Automatically manage signing** checked, and
-   pick your team (your Personal Team is enough). Device builds will not sign without this.
+2. Set your development team. Copy `Config/Local.xcconfig.example` to `Config/Local.xcconfig`
+   and replace `<YOUR_TEAM_ID>` with your own Apple Developer team ID (your Personal Team is
+   enough). All three targets inherit it automatically — there is no need to open **Signing &
+   Capabilities**, and you should avoid touching the team dropdown there, because doing so writes
+   your team ID into the shared project file. `Config/Local.xcconfig` is git-ignored, so your
+   choice stays on your machine. The file is only needed for device builds; simulator builds and
+   `xcodebuild test` work on a fresh clone without it.
 3. Select the `Sitless` scheme (or `Sitless Watch App` for the Watch companion) with your
    physical device as the run destination.
 4. Build and run. On first launch, Sitless explains what it reads from Apple Health before the
    system permission prompt appears.
+
+### One-time cleanup after pulling this change
+
+If you previously picked your team in **Signing & Capabilities**, your working copy still holds
+local edits to `Sitless.xcodeproj/project.pbxproj` (and possibly
+`Sitless/Resources/Localizable.xcstrings`) that will block the next `git pull` or sync. Clean them
+up once, in this order:
+
+1. Copy your team ID out of the project file first:
+   `grep -m1 DEVELOPMENT_TEAM Sitless.xcodeproj/project.pbxproj`
+2. Put it into your local config: copy `Config/Local.xcconfig.example` to
+   `Config/Local.xcconfig` and set `DEVELOPMENT_TEAM` to that value.
+3. Discard the leftover edits:
+   `git checkout -- Sitless.xcodeproj/project.pbxproj Sitless/Resources/Localizable.xcstrings`
+
+Step 3 is safe precisely because step 2 already moved your team ID into the untracked local file
+— the build still picks it up, and the shared project file goes back to carrying no team at all.
 
 ### Free vs. paid Apple Developer account
 
