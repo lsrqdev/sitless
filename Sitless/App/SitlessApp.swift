@@ -128,20 +128,23 @@ struct SitlessApp: App {
 private struct RootTabView: View {
     let healthData: HealthDataProviding
     let settingsStore: SettingsStore
-    @State private var needsOnboarding: Bool
-
-    init(healthData: HealthDataProviding, settingsStore: SettingsStore) {
-        self.healthData = healthData
-        self.settingsStore = settingsStore
-        _needsOnboarding = State(initialValue: healthData.authorizationState == .notDetermined)
-    }
+    /// `nil` while the Health request-status check is still resolving. The check is asynchronous,
+    /// so neither branch may be assumed up front: defaulting to onboarding would flash the
+    /// permission explainer at someone who has already answered the prompt, and defaulting to the
+    /// tabs would skip onboarding entirely on a genuine first launch.
+    @State private var needsOnboarding: Bool?
 
     var body: some View {
-        if needsOnboarding {
+        switch needsOnboarding {
+        case nil:
+            ProgressView()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .task { needsOnboarding = await healthData.authorizationState == .notDetermined }
+        case true?:
             OnboardingView(viewModel: OnboardingViewModel(healthData: healthData)) {
                 needsOnboarding = false
             }
-        } else {
+        case false?:
             TabView {
                 TodayView(viewModel: TodayViewModel(healthData: healthData, settingsStore: settingsStore))
                     .tabItem { Label("Today", systemImage: "figure.stand") }

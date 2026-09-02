@@ -3,7 +3,10 @@ import Foundation
 /// The mock boundary required by R39 — SwiftUI views never call HealthKit APIs directly,
 /// only through a ViewModel that holds a `HealthDataProviding`.
 public protocol HealthDataProviding: Sendable {
-    var authorizationState: HealthAuthorizationState { get }
+    /// Whether the Health prompt has been answered for every type Sitless reads. Asynchronous
+    /// because the only API that can answer it — `HKHealthStore.getRequestStatusForAuthorization` —
+    /// is completion-based.
+    var authorizationState: HealthAuthorizationState { get async }
     func requestAuthorization() async throws
     func standingIntervals(in range: DateInterval) async throws -> [ActivityInterval]
     func standHours(in range: DateInterval) async throws -> Int

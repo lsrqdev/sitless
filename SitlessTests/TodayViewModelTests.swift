@@ -9,14 +9,17 @@ final class TodayViewModelTests: XCTestCase {
         return SettingsStore(defaults: defaults)
     }
 
-    func testStartReflectsDeniedAuthorizationWithoutTouchingRealHealthKit() async {
-        let mock = MockHealthDataProvider(authorizationState: .denied)
+    /// Replaces the old denied-authorization test: read permission is not observable on Apple
+    /// platforms, so an undecided prompt must lead to a request and then a normal load — never to
+    /// a blocking screen.
+    func testStartWithUndeterminedAuthorizationRequestsAccessThenLoadsWithoutTouchingRealHealthKit() async {
+        let mock = MockHealthDataProvider(authorizationState: .notDetermined, standingIntervalsResult: .success([]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore())
 
         await viewModel.start()
 
-        XCTAssertEqual(viewModel.state, .denied)
-        XCTAssertEqual(mock.requestAuthorizationCallCount, 0)
+        XCTAssertEqual(mock.requestAuthorizationCallCount, 1)
+        XCTAssertEqual(viewModel.state, .noData)
     }
 
     func testStartReflectsUnavailableAuthorization() async {
@@ -29,7 +32,7 @@ final class TodayViewModelTests: XCTestCase {
     }
 
     func testStartWithNoStandingIntervalsShowsNoDataState() async {
-        let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([]))
+        let mock = MockHealthDataProvider(authorizationState: .determined, standingIntervalsResult: .success([]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore())
 
         await viewModel.start()
@@ -49,7 +52,7 @@ final class TodayViewModelTests: XCTestCase {
         let intervalEnd = max(startOfToday, now.addingTimeInterval(-1800))
         let interval = ActivityInterval(start: intervalStart, end: intervalEnd, state: .standing)
         let expectedDuration = intervalEnd.timeIntervalSince(intervalStart)
-        let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([interval]))
+        let mock = MockHealthDataProvider(authorizationState: .determined, standingIntervalsResult: .success([interval]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
 
         await viewModel.refresh()
@@ -70,7 +73,7 @@ final class TodayViewModelTests: XCTestCase {
         let activeInterval = ActivityInterval(start: startOfToday, end: now, state: .active)
         let sleepInterval = ActivityInterval(start: startOfToday, end: startOfToday.addingTimeInterval(60), state: .sleep)
         let mock = MockHealthDataProvider(
-            authorizationState: .authorized,
+            authorizationState: .determined,
             standingIntervalsResult: .success([standingInterval]),
             activityIntervalsResult: .success([activeInterval]),
             sleepIntervalsResult: .success([sleepInterval])
@@ -88,7 +91,7 @@ final class TodayViewModelTests: XCTestCase {
         let calendar = Calendar.current
         let now = Date()
         let interval = ActivityInterval(start: now.addingTimeInterval(-300), end: now, state: .standing)
-        let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([interval]))
+        let mock = MockHealthDataProvider(authorizationState: .determined, standingIntervalsResult: .success([interval]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
 
         await viewModel.refresh()
@@ -121,7 +124,7 @@ final class TodayViewModelTests: XCTestCase {
         let expectedTodayDuration = todayEnd.timeIntervalSince(todayStart)
 
         let mock = MockHealthDataProvider(
-            authorizationState: .authorized,
+            authorizationState: .determined,
             standingIntervalsResult: .success([yesterdayInterval, todayInterval])
         )
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
@@ -159,7 +162,7 @@ final class TodayViewModelTests: XCTestCase {
         let todayEnd = max(startOfToday, now.addingTimeInterval(-300))
         let todayInterval = ActivityInterval(start: todayStart, end: todayEnd, state: .standing)
         let mock = MockHealthDataProvider(
-            authorizationState: .authorized,
+            authorizationState: .determined,
             standingIntervalsResult: .success([twoDaysAgoInterval, todayInterval])
         )
         let viewModel = TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
@@ -188,7 +191,7 @@ final class TodayViewModelTests: XCTestCase {
 
         func viewModel(offWrist: Result<[DateInterval], Error>) -> TodayViewModel {
             let mock = MockHealthDataProvider(
-                authorizationState: .authorized,
+                authorizationState: .determined,
                 standingIntervalsResult: .success([interval]),
                 offWristSpansResult: offWrist
             )
@@ -210,7 +213,7 @@ final class TodayViewModelTests: XCTestCase {
 
     func testReloadGoalReflectsPersistedSettingsStoreChange() async {
         let store = Self.isolatedStore()
-        let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([]))
+        let mock = MockHealthDataProvider(authorizationState: .determined, standingIntervalsResult: .success([]))
         let viewModel = TodayViewModel(healthData: mock, settingsStore: store)
 
         XCTAssertEqual(viewModel.standingGoal, StandingGoal.defaultGoal.duration)
