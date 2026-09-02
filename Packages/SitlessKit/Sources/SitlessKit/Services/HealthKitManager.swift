@@ -9,7 +9,6 @@ public enum HealthKitManagerError: Error {
 /// All queries are bounded to the caller's `DateInterval` (R9) — never an unbounded full-database query.
 public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
     private let healthStore = HKHealthStore()
-    private let defaults: UserDefaults
 
     // Apple system-defined identifiers — always resolvable on supported OS versions.
     private static let standTimeType = HKObjectType.quantityType(forIdentifier: .appleStandTime)!
@@ -39,37 +38,42 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
     /// produces a stream of tiny unmeasured slivers on the timeline.
     public static let minimumOffWristSpan: TimeInterval = 10 * 60
 
-    /// Bumped whenever a type joins `requestAuthorization`'s read set (R44). An install that last
-    /// requested an earlier version has never been asked about the newly added types, so it is
-    /// reported as `.notDetermined` until it has been re-prompted.
-    private static let readSetVersion = 2
-    private static let requestedReadSetVersionKey = "sitless.healthkit.requestedReadSetVersion"
+    /// The exact set of types Sitless reads, declared once so that `requestAuthorization()` and
+    /// the request-status check can never drift apart.
+    private static let readTypes: Set<HKObjectType> = [
+        standTimeType, standHourType,
+        exerciseTimeType, moveTimeType, stepCountType, sleepType,
+        workoutType, heartRateType
+    ]
 
-    public init(defaults: UserDefaults = .standard) {
-        self.defaults = defaults
-    }
+    public init() {}
 
+    /// Whether the person has already answered the Health prompt for every type Sitless reads.
+    ///
+    /// `getRequestStatusForAuthorization` is the only API that can answer this. The obvious-looking
+    /// per-type `authorizationStatus` reports *sharing* permission, and since Sitless shares nothing
+    /// it returns `.sharingDenied` for every user once the prompt has been answered — read
+    /// permission itself is never exposed to apps.
+    ///
+    /// A failed query, or `.unknown`, resolves to `notDetermined`: that re-runs
+    /// `requestAuthorization()`, which HealthKit answers without a sheet for types already decided,
+    /// so the worst case is a redundant no-op rather than a stuck screen.
     public var authorizationState: HealthAuthorizationState {
-        guard HKHealthStore.isHealthDataAvailable() else { return .unavailable }
-        // R44: an install authorized before heart rate joined the read set has never been asked
-        // about it, and `authorizationStatus(for:)` cannot say so — it reports sharing permission,
-        // not read permission. Reporting `.notDetermined` here is what makes the existing
-        // `TodayViewModel.start()` / `WatchHomeViewModel.start()` gate re-run `requestAuthorization()`
-        // on the next launch. Re-requesting is harmless for types the user already answered:
-        // HealthKit only prompts for the ones still undecided. Without this the feature would
-        // silently never activate for anyone upgrading.
-        guard defaults.integer(forKey: Self.requestedReadSetVersionKey) >= Self.readSetVersion else {
-            return .notDetermined
-        }
-        switch healthStore.authorizationStatus(for: Self.standTimeType) {
-        case .notDetermined:
-            return .notDetermined
-        case .sharingDenied:
-            return .denied
-        case .sharingAuthorized:
-            return .authorized
-        @unknown default:
-            return .notDetermined
+        get async {
+            guard HKHealthStore.isHealthDataAvailable() else { return .unavailable }
+            let status: HKAuthorizationRequestStatus = await withCheckedContinuation { continuation in
+                healthStore.getRequestStatusForAuthorization(toShare: [], read: Self.readTypes) { status, _ in
+                    continuation.resume(returning: status)
+                }
+            }
+            switch status {
+            case .unnecessary:
+                return .determined
+            case .shouldRequest, .unknown:
+                return .notDetermined
+            @unknown default:
+                return .notDetermined
+            }
         }
     }
 
@@ -77,13 +81,7 @@ public final class HealthKitManager: HealthDataProviding, @unchecked Sendable {
         guard HKHealthStore.isHealthDataAvailable() else {
             throw HealthKitManagerError.unavailable
         }
-        let readTypes: Set<HKObjectType> = [
-            Self.standTimeType, Self.standHourType,
-            Self.exerciseTimeType, Self.moveTimeType, Self.stepCountType, Self.sleepType,
-            Self.workoutType, Self.heartRateType
-        ]
-        try await healthStore.requestAuthorization(toShare: [], read: readTypes)
-        defaults.set(Self.readSetVersion, forKey: Self.requestedReadSetVersionKey)
+        try await healthStore.requestAuthorization(toShare: [], read: Self.readTypes)
     }
 
     public func standingIntervals(in range: DateInterval) async throws -> [ActivityInterval] {
