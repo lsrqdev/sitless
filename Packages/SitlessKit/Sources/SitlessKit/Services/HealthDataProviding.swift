@@ -11,6 +11,20 @@ public protocol HealthDataProviding: Sendable {
     func activityIntervals(in range: DateInterval) async throws -> [ActivityInterval]
     /// Known-sleep intervals, tagged `.sleep` — excluded from the sedentary estimate (R13).
     func sleepIntervals(in range: DateInterval) async throws -> [ActivityInterval]
+    /// Spans within `range` during which the Apple Watch was not being worn (R40), inferred from
+    /// gaps between consecutive heart-rate samples — the only continuously-recorded HealthKit
+    /// signal that stops entirely when the watch leaves the wrist.
+    ///
+    /// Deliberately plain `DateInterval` values rather than `ActivityInterval`s: off-wrist time
+    /// surfaces as the existing `.unknown` state, so no fifth `ActivityState` case is introduced
+    /// and `ActivityCalculator` stays free of any notion of *why* a span is unmeasured.
+    ///
+    /// Only stretches *between* two heart-rate samples are reported — never the span before the
+    /// first sample or after the last one in `range` (R42) — so a range with zero or one sample
+    /// yields nothing at all. That is what makes this a no-op for someone using Sitless without
+    /// an Apple Watch. Returns an empty result rather than throwing when heart-rate data is
+    /// unavailable, unauthorized, or the query fails (R45).
+    func offWristSpans(in range: DateInterval) async throws -> [DateInterval]
     func steps(in range: DateInterval) async throws -> Int
     func rawDiagnostics(in range: DateInterval) async throws -> HealthDiagnosticsSnapshot
     /// Wraps `HKObserverQuery` + background delivery for the primary standing type. The handler

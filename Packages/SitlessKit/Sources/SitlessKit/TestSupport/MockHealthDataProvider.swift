@@ -12,6 +12,9 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
     public var standHoursResult: Result<Int, Error>
     public var activityIntervalsResult: Result<[ActivityInterval], Error>
     public var sleepIntervalsResult: Result<[ActivityInterval], Error>
+    /// R46: defaults to no off-wrist spans, so every existing test and call site keeps exactly the
+    /// behaviour it had before off-wrist detection existed.
+    public var offWristSpansResult: Result<[DateInterval], Error>
     public var stepsResult: Result<Int, Error>
     public var rawDiagnosticsResult: Result<HealthDiagnosticsSnapshot, Error>
     public var isInActiveWorkoutResult: Result<Bool, Error>
@@ -26,6 +29,7 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
         standHoursResult: Result<Int, Error> = .success(0),
         activityIntervalsResult: Result<[ActivityInterval], Error> = .success([]),
         sleepIntervalsResult: Result<[ActivityInterval], Error> = .success([]),
+        offWristSpansResult: Result<[DateInterval], Error> = .success([]),
         stepsResult: Result<Int, Error> = .success(0),
         rawDiagnosticsResult: Result<HealthDiagnosticsSnapshot, Error>? = nil,
         isInActiveWorkoutResult: Result<Bool, Error> = .success(false)
@@ -35,6 +39,7 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
         self.standHoursResult = standHoursResult
         self.activityIntervalsResult = activityIntervalsResult
         self.sleepIntervalsResult = sleepIntervalsResult
+        self.offWristSpansResult = offWristSpansResult
         self.stepsResult = stepsResult
         self.rawDiagnosticsResult = rawDiagnosticsResult ?? .success(
             HealthDiagnosticsSnapshot(
@@ -64,6 +69,10 @@ public final class MockHealthDataProvider: HealthDataProviding, @unchecked Senda
 
     public func sleepIntervals(in range: DateInterval) async throws -> [ActivityInterval] {
         try sleepIntervalsResult.get()
+    }
+
+    public func offWristSpans(in range: DateInterval) async throws -> [DateInterval] {
+        try offWristSpansResult.get()
     }
 
     public func steps(in range: DateInterval) async throws -> Int {

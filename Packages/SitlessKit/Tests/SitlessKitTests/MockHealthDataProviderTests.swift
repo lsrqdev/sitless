@@ -21,6 +21,19 @@ final class MockHealthDataProviderTests: XCTestCase {
         XCTAssertEqual(result, [interval])
     }
 
+    func testOffWristSpansDefaultToEmpty() async throws {
+        let mock = MockHealthDataProvider()
+        let result = try await mock.offWristSpans(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertTrue(result.isEmpty)
+    }
+
+    func testOffWristSpansReturnsConfiguredResult() async throws {
+        let span = DateInterval(start: Date(timeIntervalSince1970: 0), end: Date(timeIntervalSince1970: 3600))
+        let mock = MockHealthDataProvider(offWristSpansResult: .success([span]))
+        let result = try await mock.offWristSpans(in: DateInterval(start: .distantPast, end: .distantPast))
+        XCTAssertEqual(result, [span])
+    }
+
     func testStandingIntervalsPropagatesFailure() async {
         struct SampleError: Error {}
         let mock = MockHealthDataProvider(standingIntervalsResult: .failure(SampleError()))

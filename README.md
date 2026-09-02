@@ -49,6 +49,29 @@ xcodebuild test -scheme Sitless -destination "platform=iOS Simulator,name=iPhone
   Watch over WatchConnectivity so the two devices agree on your target — nothing else is
   exchanged between them, and neither device talks to a server.
 
+## Off-wrist time — how it's inferred
+
+A gap in the data doesn't always mean you were sitting still: your watch may simply have been on
+the charger, in the shower, or left on a nightstand. Sitless infers those stretches from gaps
+between consecutive heart-rate samples — the one signal an Apple Watch records continuously while
+it's worn and stops recording entirely when it comes off — and shows them on the timeline as
+Unknown rather than counting them as estimated sitting time. Time the app couldn't measure is
+therefore left out of your standing percentage instead of dragging it down, and a day with enough
+unmeasured time shows the "Partial data today" badge.
+
+This is best-effort, and deliberately conservative in one direction:
+
+- Only stretches *between* two heart-rate samples are considered — never the time before the
+  first sample or after the last one of a day. Using Sitless without an Apple Watch means there
+  are no heart-rate samples at all, so nothing is ever inferred and your day is classified exactly
+  as it was before.
+- The watch samples heart rate opportunistically, widening its cadence in Low Power Mode and
+  through long stretches of stillness, so the silence threshold is set generously. The effect is
+  that some genuinely off-wrist time is still counted as estimated sitting time, rather than
+  worn-but-still time being wrongly written off as unmeasured.
+- Sitless only ever knows that the watch wasn't being worn, never why. Charging, showering and
+  simply forgetting it all look the same.
+
 ## Inactivity reminders — known limitation
 
 Sitless can remind you to change position after a period of inactivity (Settings → Inactivity

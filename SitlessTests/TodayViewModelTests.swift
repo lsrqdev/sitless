@@ -175,6 +175,39 @@ final class TodayViewModelTests: XCTestCase {
         XCTAssertGreaterThan(deltaPercent, 0)
     }
 
+    /// R45: a failing off-wrist source must leave the day exactly as it would have been —
+    /// the feature can never make the Today screen worse than it was before it existed.
+    func testFailingOffWristSourceLeavesTheDaySummaryUnchanged() async {
+        struct SampleError: Error {}
+        let calendar = Calendar.current
+        let now = Date()
+        let startOfToday = calendar.startOfDay(for: now)
+        let intervalStart = max(startOfToday, now.addingTimeInterval(-3600))
+        let intervalEnd = max(startOfToday, now.addingTimeInterval(-1800))
+        let interval = ActivityInterval(start: intervalStart, end: intervalEnd, state: .standing)
+
+        func viewModel(offWrist: Result<[DateInterval], Error>) -> TodayViewModel {
+            let mock = MockHealthDataProvider(
+                authorizationState: .authorized,
+                standingIntervalsResult: .success([interval]),
+                offWristSpansResult: offWrist
+            )
+            return TodayViewModel(healthData: mock, settingsStore: Self.isolatedStore(), calendar: calendar)
+        }
+
+        let failing = viewModel(offWrist: .failure(SampleError()))
+        let baseline = viewModel(offWrist: .success([]))
+        await failing.refresh()
+        await baseline.refresh()
+
+        // The two refreshes each take their own `Date()`, so the observation windows differ by
+        // microseconds — compare the classification and the arithmetic, not the exact boundaries.
+        XCTAssertEqual(failing.state, baseline.state)
+        XCTAssertEqual(failing.timeline.map(\.state), baseline.timeline.map(\.state))
+        XCTAssertEqual(failing.estimatedSedentaryDuration ?? -1, baseline.estimatedSedentaryDuration ?? -1, accuracy: 1)
+        XCTAssertEqual(failing.standingPercentage, baseline.standingPercentage)
+    }
+
     func testReloadGoalReflectsPersistedSettingsStoreChange() async {
         let store = Self.isolatedStore()
         let mock = MockHealthDataProvider(authorizationState: .authorized, standingIntervalsResult: .success([]))

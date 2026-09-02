@@ -86,6 +86,10 @@ final class TrendsViewModel {
             let standing = try await healthData.standingIntervals(in: range)
             let activity = try await healthData.activityIntervals(in: range)
             let sleep = try await healthData.sleepIntervals(in: range)
+            // R51: off-wrist spans for the whole queried range; each day's summary clips them to
+            // its own window, so an overnight charge only counts against the day it falls in.
+            // R45: a failure degrades to no spans rather than failing the whole trends load.
+            let offWrist = (try? await healthData.offWristSpans(in: range)) ?? []
 
             series = TodayViewModel.dailyTotals(of: standing, from: periodStart, to: startOfToday, calendar: calendar)
             periodAverage = Self.average(of: series)
@@ -97,6 +101,7 @@ final class TrendsViewModel {
                 standing: standing,
                 activity: activity,
                 sleep: sleep,
+                offWrist: offWrist,
                 periodStart: periodStart,
                 periodEnd: startOfToday,
                 priorPeriodStart: priorPeriodStart,
@@ -123,6 +128,7 @@ final class TrendsViewModel {
         standing: [ActivityInterval],
         activity: [ActivityInterval],
         sleep: [ActivityInterval],
+        offWrist: [DateInterval],
         periodStart: Date,
         periodEnd: Date,
         priorPeriodStart: Date,
@@ -149,6 +155,7 @@ final class TrendsViewModel {
                     standing: within(standing),
                     activity: within(activity),
                     sleep: within(sleep),
+                    offWrist: offWrist.filter { $0.start < window.end && $0.end > window.start },
                     steps: nil,
                     standHours: nil,
                     observationWindow: window,

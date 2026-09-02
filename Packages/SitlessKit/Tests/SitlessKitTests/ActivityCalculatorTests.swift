@@ -28,7 +28,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(7), end: date(8), state: .standing),
             ActivityInterval(start: date(10), end: date(10, 30), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.standingDuration, 5400, accuracy: 1)
     }
 
@@ -40,7 +40,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(7), end: date(8), state: .standing),
             ActivityInterval(start: date(7, 30), end: date(8, 30), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.standingDuration, 5400, accuracy: 1) // 7:00-8:30, not 7200+3600
     }
 
@@ -50,7 +50,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(7), end: date(8), state: .standing),
             ActivityInterval(start: date(8), end: date(9), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.standingDuration, 7200, accuracy: 1)
     }
 
@@ -60,7 +60,7 @@ final class ActivityCalculatorTests: XCTestCase {
         let window = DateInterval(start: date(6), end: date(22))
         let standing = [ActivityInterval(start: date(7), end: date(8), state: .standing)]
         let activity = [ActivityInterval(start: date(7, 30), end: date(8, 30), state: .active)]
-        let summary = calculator.summarize(standing: standing, activity: activity, sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: activity, sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.standingDuration, 3600, accuracy: 1) // standing wins 7:00-8:00
         XCTAssertEqual(summary.activeDuration ?? 0, 1800, accuracy: 1) // active keeps only 8:00-8:30
     }
@@ -70,7 +70,7 @@ final class ActivityCalculatorTests: XCTestCase {
     func testSleepIsNeverClassifiedAsSedentary() {
         let window = DateInterval(start: date(0), end: date(8))
         let sleep = [ActivityInterval(start: date(0), end: date(6), state: .sleep)]
-        let summary = calculator.summarize(standing: [], activity: [], sleep: sleep, steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: [], activity: [], sleep: sleep, offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.estimatedSedentaryDuration ?? -1, 0, accuracy: 1)
         XCTAssertTrue(summary.timeline.allSatisfy { $0.state != .sedentary || $0.start >= date(6) })
     }
@@ -81,7 +81,7 @@ final class ActivityCalculatorTests: XCTestCase {
         let window = DateInterval(start: date(0), end: date(8))
         let sleep = [ActivityInterval(start: date(0), end: date(6), state: .sleep)]
         let standing = [ActivityInterval(start: date(2), end: date(2, 30), state: .standing)]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: sleep, steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: sleep, offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.standingDuration, 0, accuracy: 1)
     }
 
@@ -93,7 +93,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(6), end: date(7), state: .standing),
             ActivityInterval(start: date(8), end: date(9), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         // 7:00-8:00 gap (1h) is a short gap between two known samples -> sedentary.
         XCTAssertEqual(summary.estimatedSedentaryDuration ?? 0, 3600, accuracy: 1)
     }
@@ -103,7 +103,7 @@ final class ActivityCalculatorTests: XCTestCase {
     func testGapBeforeFirstAndAfterLastSampleIsUnknownNotSedentary() {
         let window = DateInterval(start: date(6), end: date(22))
         let standing = [ActivityInterval(start: date(10), end: date(11), state: .standing)]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         // Everything outside 10:00-11:00 is edge-of-coverage -> unknown, never guessed as sedentary.
         XCTAssertEqual(summary.unknownDuration, window.duration - 3600, accuracy: 1)
         XCTAssertEqual(summary.estimatedSedentaryDuration ?? -1, 0, accuracy: 1)
@@ -115,7 +115,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(6), end: date(6, 30), state: .standing),
             ActivityInterval(start: date(20), end: date(20, 30), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         // The 6:30-20:00 gap exceeds maxInferredSedentaryGap -> unknown, not a 13.5-hour sedentary claim.
         XCTAssertGreaterThan(summary.unknownDuration, ActivityCalculator.maxInferredSedentaryGap)
         XCTAssertEqual(summary.estimatedSedentaryDuration ?? -1, 0, accuracy: 1)
@@ -152,7 +152,7 @@ final class ActivityCalculatorTests: XCTestCase {
         )
         // Wall-clock reads as 2 hours, but only 1 hour of absolute time actually elapsed.
         let window = DateInterval(start: interval.start, end: interval.end)
-        let summary = calculator.summarize(standing: [interval], activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendarNY)
+        let summary = calculator.summarize(standing: [interval], activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendarNY)
         XCTAssertEqual(summary.standingDuration, 3600, accuracy: 1)
     }
 
@@ -236,7 +236,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(8), end: date(8, 10), state: .standing), // 1.5h gap before
             ActivityInterval(start: date(10), end: date(10, 10), state: .standing) // ~1h50m gap before
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.longestInactiveDuration ?? 0, 6600, accuracy: 1) // 8:10-10:00 is the largest of the two sedentary gaps
     }
 
@@ -250,7 +250,7 @@ final class ActivityCalculatorTests: XCTestCase {
             ActivityInterval(start: date(6), end: date(7), state: .standing),
             ActivityInterval(start: date(8), end: date(9), state: .standing)
         ]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertNotEqual(summary.confidence, .low)
         let expected = Int((summary.standingDuration / (summary.standingDuration + (summary.estimatedSedentaryDuration ?? 0)) * 100).rounded())
         XCTAssertEqual(summary.standingPercentage, expected)
@@ -259,7 +259,7 @@ final class ActivityCalculatorTests: XCTestCase {
     func testStandingPercentageIsNilWhenConfidenceIsLow() {
         let window = DateInterval(start: date(0), end: date(23, 59))
         let standing = [ActivityInterval(start: date(10), end: date(10, 5), state: .standing)]
-        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: [], sleep: [], offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.confidence, .low)
         XCTAssertNil(summary.standingPercentage)
     }
@@ -271,7 +271,140 @@ final class ActivityCalculatorTests: XCTestCase {
         let standing = [ActivityInterval(start: date(6), end: date(7), state: .standing)]
         let activity = [ActivityInterval(start: date(7), end: date(8), state: .active)]
         let sleep = [ActivityInterval(start: date(8), end: date(10), state: .sleep)]
-        let summary = calculator.summarize(standing: standing, activity: activity, sleep: sleep, steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
+        let summary = calculator.summarize(standing: standing, activity: activity, sleep: sleep, offWrist: [], steps: nil, standHours: nil, observationWindow: window, calendar: calendar)
         XCTAssertEqual(summary.confidence, .high)
+    }
+
+    // MARK: - Off-wrist spans (R47-R50)
+
+    /// A 4-hour window with standing at 08:00-08:30 and 11:00-11:30, and the watch on the
+    /// charger from 09:00-10:00. Shared by the classification and arithmetic tests below.
+    private var chargingDayWindow: DateInterval { DateInterval(start: date(8), end: date(12)) }
+    private var chargingDayStanding: [ActivityInterval] {
+        [
+            ActivityInterval(start: date(8), end: date(8, 30), state: .standing),
+            ActivityInterval(start: date(11), end: date(11, 30), state: .standing)
+        ]
+    }
+    private var chargingHour: DateInterval { DateInterval(start: date(9), end: date(10)) }
+
+    private func chargingDaySummary(offWrist: [DateInterval]) -> DailyActivitySummary {
+        calculator.summarize(
+            standing: chargingDayStanding,
+            activity: [],
+            sleep: [],
+            offWrist: offWrist,
+            steps: nil,
+            standHours: nil,
+            observationWindow: chargingDayWindow,
+            calendar: calendar
+        )
+    }
+
+    func testMidMorningChargingHourIsUnknownRatherThanEstimatedSitting() {
+        let summary = chargingDaySummary(offWrist: [chargingHour])
+
+        // 08:30-09:00 and 10:00-11:00 remain sedentary; the charging hour and the 11:30-12:00
+        // edge gap are unknown.
+        XCTAssertEqual(summary.estimatedSedentaryDuration ?? 0, 5400, accuracy: 1)
+        XCTAssertEqual(summary.unknownDuration, 5400, accuracy: 1)
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(9), end: date(10), state: .unknown)))
+    }
+
+    func testChargingHourRaisesStandingPercentageVersusNoOffWristBaseline() {
+        let baseline = chargingDaySummary(offWrist: [])
+        let withOffWrist = chargingDaySummary(offWrist: [chargingHour])
+
+        guard let baselinePercentage = baseline.standingPercentage,
+              let offWristPercentage = withOffWrist.standingPercentage else {
+            XCTFail("Expected both summaries to produce a standing percentage")
+            return
+        }
+        XCTAssertGreaterThan(offWristPercentage, baselinePercentage)
+    }
+
+    func testEmptyOffWristInputReproducesTheUnchangedClassification() {
+        let summary = chargingDaySummary(offWrist: [])
+
+        XCTAssertEqual(summary.standingDuration, 3600, accuracy: 1)
+        XCTAssertEqual(summary.estimatedSedentaryDuration ?? 0, 9000, accuracy: 1) // the whole 08:30-11:00 gap
+        XCTAssertEqual(summary.unknownDuration, 1800, accuracy: 1) // only the 11:30-12:00 edge gap
+        XCTAssertEqual(summary.standingPercentage, 29) // 3600 / 12600
+    }
+
+    func testPartiallyOverlappingOffWristSpanSplitsTheGap() {
+        // 10:30-11:30 overlaps the 08:30-11:00 sedentary gap only from 10:30.
+        let summary = chargingDaySummary(offWrist: [DateInterval(start: date(10, 30), end: date(11, 30))])
+
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(8, 30), end: date(10, 30), state: .sedentary)))
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(10, 30), end: date(11), state: .unknown)))
+        XCTAssertEqual(summary.estimatedSedentaryDuration ?? 0, 7200, accuracy: 1)
+    }
+
+    func testMeasuredIntervalsSurviveAnOverlappingOffWristSpan() {
+        // The span swallows the 11:00-11:30 standing sample whole; measured data always wins (R49).
+        let summary = chargingDaySummary(offWrist: [DateInterval(start: date(10, 30), end: date(11, 30))])
+
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(11), end: date(11, 30), state: .standing)))
+        XCTAssertEqual(summary.standingDuration, 3600, accuracy: 1)
+    }
+
+    func testOffWristSpanInsideASleepIntervalLeavesItClassifiedAsSleep() {
+        let window = DateInterval(start: date(0), end: date(8))
+        let sleep = [ActivityInterval(start: date(0), end: date(6), state: .sleep)]
+        let standing = [ActivityInterval(start: date(6), end: date(6, 30), state: .standing)]
+        let summary = calculator.summarize(
+            standing: standing,
+            activity: [],
+            sleep: sleep,
+            offWrist: [DateInterval(start: date(1), end: date(2))],
+            steps: nil,
+            standHours: nil,
+            observationWindow: window,
+            calendar: calendar
+        )
+
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(0), end: date(6), state: .sleep)))
+        XCTAssertFalse(summary.timeline.contains { $0.state == .unknown && $0.start < date(6) })
+    }
+
+    func testEnoughOffWristTimeDropsConfidenceThroughTheExistingUnknownRatioRule() {
+        let window = DateInterval(start: date(6), end: date(12)) // 6h
+        let standing = [
+            ActivityInterval(start: date(6), end: date(7), state: .standing),
+            ActivityInterval(start: date(11), end: date(12), state: .standing)
+        ]
+        let activity = [ActivityInterval(start: date(7), end: date(8), state: .active)]
+        let sleep = [ActivityInterval(start: date(8), end: date(9), state: .sleep)]
+
+        func summary(offWrist: [DateInterval]) -> DailyActivitySummary {
+            calculator.summarize(
+                standing: standing, activity: activity, sleep: sleep, offWrist: offWrist,
+                steps: nil, standHours: nil, observationWindow: window, calendar: calendar
+            )
+        }
+
+        XCTAssertEqual(summary(offWrist: []).confidence, .high)
+        // 2h of the 6h window unmeasured is a 0.33 unknown ratio, past the 0.25 high-confidence
+        // bar — no confidence threshold changed, the ratio simply moved.
+        XCTAssertEqual(summary(offWrist: [DateInterval(start: date(9), end: date(11))]).confidence, .medium)
+    }
+
+    func testOffWristSpansAreClippedToTheObservationWindow() {
+        // A charge running from midnight to 07:00, against a window that only opens at 06:00 —
+        // only the in-window portion is ever classified.
+        let summary = calculator.summarize(
+            standing: [ActivityInterval(start: date(8), end: date(9), state: .standing)],
+            activity: [],
+            sleep: [],
+            offWrist: [DateInterval(start: date(0), end: date(7))],
+            steps: nil,
+            standHours: nil,
+            observationWindow: DateInterval(start: date(6), end: date(9)),
+            calendar: calendar
+        )
+
+        XCTAssertTrue(summary.timeline.contains(ActivityInterval(start: date(6), end: date(7), state: .unknown)))
+        XCTAssertEqual(summary.unknownDuration, 7200, accuracy: 1) // 06:00-07:00 off-wrist + 07:00-08:00 edge gap
     }
 }
