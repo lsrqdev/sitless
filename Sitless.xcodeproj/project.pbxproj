@@ -22,6 +22,7 @@
 		00000000000000000000003B /* TrendsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000035 /* TrendsViewModel.swift */; };
 		00000000000000000000003C /* TrendsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000036 /* TrendsView.swift */; };
 		00000000000000000000003D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* Localizable.xcstrings */; };
+		000000000000000000000068 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000066 /* Assets.xcassets */; };
 		000000000000000000000044 /* OnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000040 /* OnboardingViewModel.swift */; };
 		000000000000000000000045 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000041 /* OnboardingView.swift */; };
 		000000000000000000000046 /* TimelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000042 /* TimelineView.swift */; };
@@ -30,6 +31,7 @@
 		00000000000000000000004F /* WatchHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000049 /* WatchHomeViewModel.swift */; };
 		000000000000000000000050 /* WatchHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004A /* WatchHomeView.swift */; };
 		000000000000000000000063 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000037 /* Localizable.xcstrings */; };
+		000000000000000000000069 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 000000000000000000000067 /* Assets.xcassets */; };
 		000000000000000000000051 /* SitlessKit in Frameworks */ = {isa = PBXBuildFile; productRef = 000000000000000000000060 /* SitlessKit */; };
 		000000000000000000000052 /* Sitless Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 00000000000000000000004D /* Sitless Watch App.app */; settings = {ATTRIBUTES = (RemoveHeaderFilesOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -94,6 +96,8 @@
 		00000000000000000000004C /* SitlessWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SitlessWatch.entitlements; sourceTree = "<group>"; };
 		00000000000000000000004D /* Sitless Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sitless Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		000000000000000000000064 /* Shared.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Shared.xcconfig; sourceTree = "<group>"; };
+		000000000000000000000066 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		000000000000000000000067 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000037 /* Localizable.xcstrings */,
+				000000000000000000000066 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -240,6 +245,7 @@
 				000000000000000000000048 /* SitlessWatchApp.swift */,
 				000000000000000000000055 /* Views */,
 				000000000000000000000054 /* ViewModels */,
+				00000000000000000000006A /* Resources */,
 				00000000000000000000004B /* Info.plist */,
 				00000000000000000000004C /* SitlessWatch.entitlements */,
 			);
@@ -260,6 +266,14 @@
 				00000000000000000000004A /* WatchHomeView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		00000000000000000000006A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				000000000000000000000067 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -379,6 +393,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00000000000000000000003D /* Localizable.xcstrings in Resources */,
+				000000000000000000000068 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -394,6 +409,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				000000000000000000000063 /* Localizable.xcstrings in Resources */,
+				000000000000000000000069 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -518,6 +534,7 @@
 		000000000000000000000029 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Sitless/Sitless.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -542,6 +559,7 @@
 		00000000000000000000002A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = Sitless/Sitless.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -608,6 +626,7 @@
 		00000000000000000000005D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = SitlessWatch/SitlessWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -633,6 +652,7 @@
 		00000000000000000000005E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CODE_SIGN_ENTITLEMENTS = SitlessWatch/SitlessWatch.entitlements;
 				CODE_SIGN_STYLE = Automatic;
